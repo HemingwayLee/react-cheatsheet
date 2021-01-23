@@ -1,12 +1,12 @@
 {
-  "name": "HelloReact",
+  "name": "hellocomponent",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --hot"
   },
-  "author": "",
+  "author": "ywlee",
   "license": "",
   "dependencies": {
     "babel-core": "^6.9.1",

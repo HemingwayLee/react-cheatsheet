@@ -43,6 +43,7 @@ class Header extends React.Component {
     return (
       <div>
         <h1>Header</h1>
+        <h3>Many Components used in this demo</h3>
       </div>
     );
   }
