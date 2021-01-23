@@ -12,8 +12,8 @@ add `--host 0.0.0.0` to `gogo` command in package.json
 
 # Run inside docker
 ```
-docker build -t myreact .
-docker run -it --rm -p 3000:3000 mynode
+docker build -t myreactfunc .
+docker run -it --rm -p 3000:3000 myreactfunc
 ```
 
 
