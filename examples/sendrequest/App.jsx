@@ -28,7 +28,7 @@ class App extends React.Component {
     .then(function(myJson) {
       this.setState({data: myJson});
     }.bind(this)).catch((error) => {
-        console.log(error);
+      console.log(error);
     });
   }
 
