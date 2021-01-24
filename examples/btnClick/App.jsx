@@ -2,7 +2,6 @@ import React from 'react';
 
 class App extends React.Component {
   alertMe(e) {
-    e.preventDefault()
     alert("Hello, " + e.target.innerText);
   }
 
@@ -13,8 +12,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={e => this.alertMe(e)}>Click Me</button>
-        <p onClick={e => this.changeMyColor(e)}>Click Me and Change my color</p>
+        <button onClick={e => this.alertMe(e)}>Click Me to alert</button>
+        <p onClick={e => this.changeMyColor(e)}>I am p tag, Click Me and Change my color</p>
       </div>
     );
   }

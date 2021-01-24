@@ -1,10 +1,10 @@
 {
-  "name": "HelloReact",
+  "name": "HelloButtonClick",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot"
+    "start": "webpack-dev-server --hot --host 0.0.0.0 --port 3000"
   },
   "author": "",
   "license": "",
