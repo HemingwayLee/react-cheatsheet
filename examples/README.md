@@ -39,5 +39,7 @@ function getDateString() {
   * This is also known as `minify` and `uglify`
 * Webpack often runs Babel as one of its jobs
 
+## jQuery and Bootstrap
+jQuery approach from Bootstrap is very difficult to work with React since React primarily works with a Virtual DOM
 
 
