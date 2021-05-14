@@ -13,5 +13,10 @@ npm run start
 * `webpack` is used in this project
 * use `dist`
 
+## Run by docker
+```
+docker build -t myhello .
+docker run -it --rm -p9000:9000 myhello
+```
 
 

@@ -9,6 +9,7 @@ var config = {
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
+    host: '0.0.0.0',
     open: true,
     clientLogLevel: 'silent',
     port: 9000,
