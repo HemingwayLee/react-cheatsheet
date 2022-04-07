@@ -1,6 +1,3 @@
-# TODO:
-nothing done
-
 # How 
 ```
 npm install .
