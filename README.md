@@ -4,6 +4,7 @@
 * React applications usually require the use of additional libraries for routing (e.g., React Router)
 * `Components`: React code is made of Components. They can be rendered to a particular element in the DOM
   * `Functional components` and `Class-based components`
+  * We should use functional components if we are writing a presentational component which doesn’t have its own state or needs to access a lifecycle hook. [Ref](https://djoech.medium.com/functional-vs-class-components-in-react-231e3fbd7108)
 * `Virtual DOM`: React creates an in-memory cache, computes the resulting differences, and then updates the browser's displayed DOM (The `reconciliation` process)
   * It allows us to write code as if the entire page is rendered on each change, while the React libraries only render subcomponents that actually change. This selective rendering provides a performance boost
 * `Lifecycle methods` (e.g., `shouldComponentUpdate`, `componentDidMount`, `render`, ...)
@@ -16,7 +17,7 @@
 * React is more popular and has rich package ecosystem
 
 # Examples
-![Hello world](https://github.com/HemingwayLee/sample-react-yarn)
+[Hello world](https://github.com/HemingwayLee/sample-react-yarn)
 
 # TODO
 frontend routing
