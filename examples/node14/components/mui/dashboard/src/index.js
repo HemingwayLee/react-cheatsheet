@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import Dashboard from './App.jsx';
 
 ReactDOM.render(
-  <Dashboard 
-    name='ywlee'
-  />,
+  <Dashboard />,
   document.getElementById('root')
 );

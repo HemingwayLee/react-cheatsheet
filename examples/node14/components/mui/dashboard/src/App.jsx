@@ -1,6 +1,5 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -29,15 +28,6 @@ class Dashboard extends React.Component {
       <ThemeProvider theme={theme}>
         <Box sx={{ display: 'flex' }}>
           <Drawer variant="permanent">
-            <Toolbar
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                px: [1],
-              }}
-            >
-            </Toolbar>
             <List component="nav">
               {mainListItems}
             </List>
