@@ -12,6 +12,9 @@
 * `React hooks`: They are functions that let developers "hook into" React state and lifecycle features from function components
 * `Flux architecture`: To support unidirectional data flow (contrasted with AngularJS's bidirectional flow), the Flux architecture represents an alternative to the popular MVC architecture
 
+# Sending request
+* [build-in fetch vs axios](https://blog.logrocket.com/axios-vs-fetch-best-http-requests/)
+
 # Compare to Vue.js
 * Vue is easy to learn and lightweight
 * React is more popular and has rich package ecosystem
