@@ -2,10 +2,6 @@ import * as React from 'react';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
-// function preventDefault(event) {
-//   event.preventDefault();
-// }
-
 export default function Card() {
   const [repos, setRepos] = React.useState(0);
   const [fetchDate, setFetchDate] = React.useState(0);
