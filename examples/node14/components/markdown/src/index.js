@@ -10,6 +10,7 @@ const input = "# Hello  \n* Test1  \n* Test2";
 ReactDOM.render(
   <div>
     <App />
+    <hr/>
     <ReactMarkdown>{input}</ReactMarkdown>
   </div>,
   document.getElementById('root')
