@@ -19,7 +19,15 @@ class Welcome extends React.Component {
   }
 
   generateEditor() {
-    return <div><h3>Drag and Drop Image</h3><textarea onChange={this.handleTextInput} style={{width : '100%'}} rows="10">{this.state.theContent}</textarea></div>
+    return (<div>
+      <h3>Drag and Drop Image</h3>
+      <textarea 
+        onChange={this.handleTextInput} 
+        style={{width : '100%'}} 
+        rows="10"
+        value={this.state.theContent}>
+      </textarea>
+      </div>)
   }
 
   generateMarkdown() {
