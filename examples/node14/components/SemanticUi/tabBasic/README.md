@@ -14,9 +14,15 @@ npm run start
 * use `dist`
 
 ## Run by docker
+* run with dev server
 ```
-docker build -t myhello .
-docker run -it --rm -p9000:9000 myhello
+docker build -f dev.server.dockerfile -t myreact .
+docker run --rm -p9000:9000 -it myreact
 ```
 
+* run with build and nginx
+```
+docker build -f build.nginx.dockerfile -t myreact .
+docker run -it --rm -p80:80 myreact
+```
 
