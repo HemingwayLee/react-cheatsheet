@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  mydb:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: exp
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /home/app/init.sh
+    environment:
+      DB_HOST: mydb
+      DB_PORT: 5432
+      DB_NAME: exp
+      DB_USER: postgres
+      DB_PASS: pass
+    volumes:
+      - "./backend/src:/home/app/backend/src"
+      - "./frontend/:/home/app/frontend/"
+    ports:
+      - "80:80"
+    depends_on:
+      - mydb
+
