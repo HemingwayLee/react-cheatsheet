@@ -10,5 +10,5 @@ echo "psql is up !!"
 pwd
 ls
 
-concurrently "cd frontend && npm run start" "cd backend && npm run start"
+concurrently "cd /home/app/frontend && npm run start" "cd /home/app/backend && npm run start"
 
