@@ -1,4 +1,9 @@
-# Not finished yet
+# What
+* devServer.proxy need to be set in `frontend/webpack.config.js`
+* proxy need to be set in `package.json` 
+* another backend server needed to be set and listening to port 3000
+* If proxy is not working, we need to `rm -r package-lock.json node_modules`
+
 
 # How 
 ```
