@@ -3,6 +3,7 @@
 * proxy need to be set in `package.json` 
 * If proxy is not working, we need to `rm -r package-lock.json node_modules`
 * `concurrently` need to be installed in order to run both backend and frontend
+* Auto reload feature is there
 
 # Init
 ```

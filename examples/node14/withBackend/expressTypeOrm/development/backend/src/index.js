@@ -20,4 +20,8 @@ app.get('/api/', function(req, res) {
   res.status(200).send(JSON.stringify({ result: 5566 }))
 })
 
+app.get('/api/path/', function(req, res) {
+  res.status(200).send(JSON.stringify({ result: 183 }))
+})
+
 app.listen(3000)

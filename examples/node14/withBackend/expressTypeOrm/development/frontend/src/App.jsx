@@ -3,6 +3,18 @@ import { Tab, Button } from 'semantic-ui-react'
 
 class Welcome extends React.Component {
   handleClick() {
+    fetch('/api/path/', {
+      method: 'GET',
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      alert(myJson["result"]);
+    });
+  }
+
+  handleClick2() {
     fetch('/api/', {
       method: 'GET',
     })
@@ -19,6 +31,7 @@ class Welcome extends React.Component {
       <div>
         <Tab.Pane>Tab 1 Content From a function</Tab.Pane>
         <Button secondary onClick={this.handleClick}>Call backend</Button>
+        <Button secondary onClick={this.handleClick2}>Call backend 2</Button>
       </div>
     )
   }
