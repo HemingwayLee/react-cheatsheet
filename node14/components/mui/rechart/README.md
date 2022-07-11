@@ -3,6 +3,11 @@
 npm install .
 ```
 
+## Install mui
+```
+npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
+```
+
 # Run
 ```
 npm run build
