@@ -73,7 +73,7 @@ class Dashboard extends React.Component {
                   </Paper>
                 </Grid>
                 <Grid item xs={12}>
-                  <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 240, }}>
+                  <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                     <RecursiveTreeView />
                   </Paper>
                 </Grid>

@@ -4,6 +4,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import TreeItem from "@mui/lab/TreeItem";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import { ResponsiveContainer } from 'recharts';
 
 const data = {
   id: "0",
@@ -121,12 +122,16 @@ export default function RecursiveTreeView() {
   );
 
   return (
-    <TreeView
-      defaultCollapseIcon={<ArrowDropDownIcon />}
-      defaultExpanded={["0", "3", "4"]}
-      defaultExpandIcon={<ArrowForwardIosIcon />}
-    >
-      {renderTree(data)}
-    </TreeView>
+    <React.Fragment>
+      <ResponsiveContainer>
+        <TreeView
+          defaultCollapseIcon={<ArrowDropDownIcon />}
+          defaultExpanded={["0", "3", "4"]}
+          defaultExpandIcon={<ArrowForwardIosIcon />}
+        >
+          {renderTree(data)}
+        </TreeView>
+      </ResponsiveContainer>
+    </React.Fragment>
   );
 }
