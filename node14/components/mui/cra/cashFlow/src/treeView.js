@@ -6,47 +6,69 @@ import TreeItem from "@mui/lab/TreeItem";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { ResponsiveContainer } from 'recharts';
 import Button from '@mui/material/Button';
+import { v4 as uuidv4 } from 'uuid';
 
-const data = {
+// const gData = {
+//   id: "0",
+//   name: "Parent",
+//   children: [
+//     {
+//       id: "1",
+//       name: "Child - 1"
+//     },
+//     {
+//       id: "3",
+//       name: "Child - 3",
+//       children: [
+//         {
+//           id: "4",
+//           name: "Child - 4",
+//           children: [
+//             {
+//               id: "7",
+//               name: "Child - 7"
+//             },
+//             {
+//               id: "8",
+//               name: "Child - 8"
+//             }
+//           ]
+//         }
+//       ]
+//     },
+//     {
+//       id: "5",
+//       name: "Child - 5",
+//       children: [
+//         {
+//           id: "6",
+//           name: "Child - 6"
+//         }
+//       ]
+//     }
+//   ]
+// };
+
+const gData = {
   id: "0",
-  name: "Parent",
+  name: "Csv files",
   children: [
-    {
-      id: "1",
-      name: "Child - 1"
-    },
-    {
-      id: "3",
-      name: "Child - 3",
-      children: [
-        {
-          id: "4",
-          name: "Child - 4",
-          children: [
-            {
-              id: "7",
-              name: "Child - 7"
-            },
-            {
-              id: "8",
-              name: "Child - 8"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "5",
-      name: "Child - 5",
-      children: [
-        {
-          id: "6",
-          name: "Child - 6"
-        }
-      ]
-    }
+    // {
+    //   id: "1",
+    //   name: "Child - 1"
+    // },
+    // {
+    //   id: "2",
+    //   name: "Child - 3"
+    // },
+    // {
+    //   id: "3",
+    //   name: "Child - 5"
+    // }
   ]
 };
+
+let gCsv = {};
 
 export default function RecursiveTreeView() {
   const [selected, setSelected] = React.useState([]);
@@ -86,7 +108,7 @@ export default function RecursiveTreeView() {
   }
 
   function getOnChange(checked, nodes) {
-    const allNode = getChildById(data, nodes.id);
+    const allNode = getChildById(gData, nodes.id);
     let array = checked
       ? [...selected, ...allNode]
       : selected.filter(value => !allNode.includes(value));
@@ -101,7 +123,7 @@ export default function RecursiveTreeView() {
   }
 
   function handleCsvData(data, name) {
-
+    console.log(data);
   }
 
   function handleCapture({target}) {
@@ -114,7 +136,7 @@ export default function RecursiveTreeView() {
     // };
 
     const selectedFile = target.files[0];
-    console.log(selectedFile);
+    // console.log(selectedFile);
 
     const promise = new Promise(resolve => {
       const fileContent = ReadFile(selectedFile);
@@ -123,21 +145,26 @@ export default function RecursiveTreeView() {
 
     promise.then(fileContent => {
       const filename = selectedFile.name;
-      console.log(filename);
+      // console.log(filename);
 
-      // if (filename in gCsv) {
-      //   alert("csv file already exists");
-      // } else {
-      //   $('input.theFile:checkbox').prop('checked', false); 
+      if (filename in gCsv) {
+        alert("csv file already exists");
+      } else {
+        // $('input.theFile:checkbox').prop('checked', false); 
 
-      //   $("#csvFiles").append(
-      //     $('<div class="checkbox">').append(
-      //       $("<label>").html(`<input class="theFile" type="checkbox" value="${filename}" checked>${filename}</label>`)
-      //     )
-      //   );
+        // $("#csvFiles").append(
+        //   $('<div class="checkbox">').append(
+        //     $("<label>").html(`<input class="theFile" type="checkbox" value="${filename}" checked>${filename}</label>`)
+        //   )
+        // );
+        gData.children.push({
+          id: uuidv4(),
+          name: filename
+        });
 
-      //   handleCsvData(fileContent, selectedFile.name);
-      // }
+        // TODO: render automatically
+        handleCsvData(fileContent, filename);
+      }
     });
   }
 
@@ -150,9 +177,7 @@ export default function RecursiveTreeView() {
           control={
             <Checkbox
               checked={selected.some(item => item === nodes.id)}
-              onChange={event =>
-                getOnChange(event.currentTarget.checked, nodes)
-              }
+              onChange={e => getOnChange(e.currentTarget.checked, nodes)}
               onClick={e => e.stopPropagation()}
             />
           }
@@ -179,7 +204,7 @@ export default function RecursiveTreeView() {
           defaultCollapseIcon={<ArrowDropDownIcon />}
           defaultExpandIcon={<ArrowForwardIosIcon />}
         >
-          {renderTree(data)}
+          {renderTree(gData)}
         </TreeView>
       </ResponsiveContainer>
     </React.Fragment>
