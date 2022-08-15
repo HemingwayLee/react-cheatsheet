@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import MuiDrawer from '@mui/material/Drawer';
@@ -10,6 +11,7 @@ import { MainListItem } from './listItems';
 import VocabularyChart from './barChart';
 import RecursiveTreeView from './treeView';
 import CardChart from './cardChart';
+
 
 const cbColors = ["#d55e0099", "#cc79a799", "#0072b299", "#f0e44299", "#009e7399"];
 
@@ -27,7 +29,18 @@ const Drawer = styled(MuiDrawer, {})(
 const theme = createTheme();
 
 export default function Dashboard() {
+  const playerRef = React.useRef(null);
   const [stateVocab, setVocabValues] = React.useState([]);
+
+  const onJump2Time = (ts) => {
+    console.log(ts);
+    const jump2 = moment.duration(ts.split(',')[0]).asSeconds();
+    console.log(jump2)
+
+    if (playerRef) {
+      playerRef.current.seekTo(jump2 - 5.5);
+    }
+  }
 
   const onHandleVocabFileLoad = (filename, fileContent) => {
     if (stateVocab.length >= cbColors.length) {
@@ -57,7 +70,7 @@ export default function Dashboard() {
       <Box sx={{ display: 'flex' }}>
         <Drawer variant="permanent">
           <List component="nav">
-            <MainListItem vocab={stateVocab}/>
+            <MainListItem vocab={stateVocab} handleJump={onJump2Time}/>
           </List>
         </Drawer>
         <Box
@@ -100,7 +113,7 @@ export default function Dashboard() {
               </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  {/* <RecursiveTreeView /> */}
+                  <RecursiveTreeView player={playerRef}/>
                 </Paper>
               </Grid>
             </Grid>

@@ -47,7 +47,7 @@ export function MainListItem(prop) {
         ? items.map(x => {
           
           return (
-            <ListItemButton key={x.id}>
+            <ListItemButton key={x.id} onClick={() => prop.handleJump(x.startTime)}>
               <ListItemText 
                 primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
                 primary={ doTokenization(x) }
