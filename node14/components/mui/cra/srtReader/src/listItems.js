@@ -60,7 +60,7 @@ export function MainListItem() {
   return (
     <React.Fragment>
       <Button variant="contained" component="label" onChange={handleClick}>
-        Upload Srt File
+        Load Srt File
         <input type="file" accept=".srt" hidden />
       </Button>
       <ResponsiveContainer width="95%" height={400}>
