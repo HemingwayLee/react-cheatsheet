@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import { BarChart, Bar, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
-
+import { useTheme } from '@mui/material/styles';
+  
 export default function VocabularyChart(prop) {
   const theme = useTheme();
+
   return (
     <React.Fragment>
       <h1>Vocabulary</h1>

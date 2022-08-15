@@ -9,6 +9,9 @@ import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import { MainListItem } from './listItems';
 import VocabularyChart from './barChart';
 import RecursiveTreeView from './treeView';
+import CardChart from './cardChart';
+
+const cbColors = ["#d55e0099", "#cc79a799", "#0072b299", "#f0e44299", "#009e7399"];
 
 const Drawer = styled(MuiDrawer, {})(
   ({}) => ({
@@ -24,23 +27,37 @@ const Drawer = styled(MuiDrawer, {})(
 const theme = createTheme();
 
 export default function Dashboard() {
-  const [stateVocab, setVocabValues] = React.useState([{
-    "name": "N5",
-    "count": 18
-  }, {
-    "name": "N4",
-    "count": 20
-  }, {
-    "name": "N3",
-    "count": 21
-  }]);
+  const [stateVocab, setVocabValues] = React.useState([]);
+
+  const onHandleVocabFileLoad = (filename, fileContent) => {
+    if (stateVocab.length >= cbColors.length) {
+      alert("no more files")
+      return
+    }
+
+    let tmp = [...stateVocab];
+
+    const arr = fileContent.split("\r\n");
+    // console.log(arr)
+
+    tmp.push({
+      "name": filename,
+      "arr": arr,
+      "count": arr.length,
+      "color": cbColors[stateVocab.length]
+    });
+
+    console.log(tmp)
+
+    setVocabValues(tmp);
+  }
   
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <Drawer variant="permanent">
           <List component="nav">
-            <MainListItem />
+            <MainListItem vocab={stateVocab}/>
           </List>
         </Drawer>
         <Box
@@ -66,7 +83,7 @@ export default function Dashboard() {
                     height: 240,
                   }}
                 >
-                  <VocabularyChart data={stateVocab} />
+                  {/* <VocabularyChart data={stateVocab} /> */}
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
@@ -78,12 +95,12 @@ export default function Dashboard() {
                     height: 240,
                   }}
                 >
-                  { stateVocab.reduce((sum, x) => sum + x.count, 0) }
+                  <CardChart data={stateVocab} handleVocabFileLoad={onHandleVocabFileLoad}/>
                 </Paper>
               </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <RecursiveTreeView />
+                  {/* <RecursiveTreeView /> */}
                 </Paper>
               </Grid>
             </Grid>
