@@ -31,6 +31,7 @@ const theme = createTheme();
 export default function Dashboard() {
   const playerRef = React.useRef(null);
   const [stateVocab, setVocabValues] = React.useState([]);
+  const [stateMatchedVocab, setMatchedVocabValues] = React.useState([]);
 
   const onJump2Time = (ts) => {
     console.log(ts);
@@ -40,6 +41,14 @@ export default function Dashboard() {
     if (playerRef) {
       playerRef.current.seekTo(jump2 - 5.5);
     }
+  }
+
+  const onHandleMatchedVocab = (arr) => {
+    console.log("!!!!!!!!?????8888")
+    console.log(arr)
+    console.log("!!!!!!!!?????8888")
+
+    setMatchedVocabValues(arr)
   }
 
   const onHandleVocabFileLoad = (filename, fileContent) => {
@@ -70,7 +79,7 @@ export default function Dashboard() {
       <Box sx={{ display: 'flex' }}>
         <Drawer variant="permanent">
           <List component="nav">
-            <MainListItem vocab={stateVocab} handleJump={onJump2Time}/>
+            <MainListItem setMatched={setMatchedVocabValues} vocab={stateVocab} handleJump={onJump2Time} handleMatched={onHandleMatchedVocab}/>
           </List>
         </Drawer>
         <Box
@@ -96,7 +105,7 @@ export default function Dashboard() {
                     height: 240,
                   }}
                 >
-                  {/* <VocabularyChart data={stateVocab} /> */}
+                  <VocabularyChart data={stateMatchedVocab} />
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>

@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-// import { ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+
 
 export default function CardChart(prop) {
-  const theme = useTheme();
-
   async function ReadFile(file) {
     return await file.text()
   }
@@ -35,10 +33,22 @@ export default function CardChart(prop) {
         Load Vocabulary
         <input type="file" accept=".txt" hidden />
       </Button>
-      <h1>Total Vocabulary</h1>
+      {/* <h1>Total Vocabulary</h1>
       <h2>
         { prop.data.reduce((sum, x) => sum + x.count, 0) }
-      </h2>
+      </h2> */}
+      <ResponsiveContainer>
+        <PieChart>
+          <Tooltip />
+          <Pie data={prop.data} dataKey="count" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80}>
+            {
+              prop.data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))
+            }
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
     </React.Fragment>
   );
 }

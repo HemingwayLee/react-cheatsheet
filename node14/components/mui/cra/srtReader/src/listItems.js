@@ -18,14 +18,15 @@ const parser = new srtParser2()
 
 export function MainListItem(prop) {
   const [stateItems, setItemValues] = React.useState([]);
-  
   function getColor(x) {
     for (var i=0; i<prop.vocab.length; ++i) {
       if (prop.vocab[i].arr.includes(x)) {
+        // tmpMatchedVocab[i].count += 1;
         return prop.vocab[i].color;
       }
     }
 
+    // tmpMatchedVocab[tmpMatchedVocab.length-1].count += 1;
     return "#ffffff00";
   }
 
@@ -41,22 +42,56 @@ export function MainListItem(prop) {
     return tokenizer.tokenize(x.text).map(x => doStyling(x.surface_form))
   }
 
+  function doMatching(tmpMatchedVocab, x) {
+    for (var i=0; i<prop.vocab.length; ++i) {
+      if (prop.vocab[i].arr.includes(x)) {
+        tmpMatchedVocab[i].count += 1;
+        return;
+      }
+    }
+  
+    tmpMatchedVocab[tmpMatchedVocab.length-1].count += 1;
+  }
+
+  function initMatchedArr(result) {
+    let tmpMatchedVocab = prop.vocab.map((x, idx) => {
+      return {
+        "name": prop.vocab[idx].name,
+        "count": 0,
+        "color": prop.vocab[idx].color
+      }
+    });
+    
+    tmpMatchedVocab.push({
+      "name": "others",
+      "count": 0,
+      "color": "black"
+    })
+
+    result.map(x => {
+      tokenizer.tokenize(x.text).map(x => doMatching(tmpMatchedVocab, x.surface_form))
+    });
+
+    prop.handleMatched(tmpMatchedVocab);
+  }
+
   const renderItems = (items) => (
     <div>
-      { Array.isArray(items)
-        ? items.map(x => {
-          
-          return (
-            <ListItemButton key={x.id} onClick={() => prop.handleJump(x.startTime)}>
-              <ListItemText 
-                primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
-                primary={ doTokenization(x) }
-                secondary={ x.startTime + " -> " + x.endTime } 
-              />
-            </ListItemButton>
-          );
-        })
-        : null}
+      { 
+        Array.isArray(items)
+          ? items.map(x => {
+            
+            return (
+              <ListItemButton key={x.id} onClick={() => prop.handleJump(x.startTime)}>
+                <ListItemText 
+                  primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
+                  primary={ doTokenization(x) }
+                  secondary={ x.startTime + " -> " + x.endTime } 
+                />
+              </ListItemButton>
+            );
+          }) : null
+      }
     </div>
   );
   
@@ -68,6 +103,8 @@ export function MainListItem(prop) {
     var result = parser.fromSrt(data);
     console.log(result);
   
+    initMatchedArr(result);
+
     setItemValues(result);
   }
   
