@@ -43,7 +43,7 @@ export default function RecursiveTreeView(prop) {
   return (
     <React.Fragment>
       <Button variant="contained" component="label" onChange={handleCapture}>
-        Upload File
+        Load .mp4 File
         <input type="file" accept=".mp4" hidden />
       </Button>
 

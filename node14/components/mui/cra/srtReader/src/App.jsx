@@ -44,10 +44,6 @@ export default function Dashboard() {
   }
 
   const onHandleMatchedVocab = (arr) => {
-    console.log("!!!!!!!!?????8888")
-    console.log(arr)
-    console.log("!!!!!!!!?????8888")
-
     setMatchedVocabValues(arr)
   }
 
@@ -69,7 +65,7 @@ export default function Dashboard() {
       "color": cbColors[stateVocab.length]
     });
 
-    console.log(tmp)
+    // console.log(tmp)
 
     setVocabValues(tmp);
   }

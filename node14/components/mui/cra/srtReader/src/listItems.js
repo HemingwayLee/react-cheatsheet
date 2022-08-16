@@ -2,7 +2,10 @@ import * as React from 'react';
 
 import Button from '@mui/material/Button';
 import ListItemButton from '@mui/material/ListItemButton';
+import IconButton from "@mui/material/IconButton";
 import ListItemText from '@mui/material/ListItemText';
+import SmileIcon from "@mui/icons-material/Mood";
+import Coffee from '@mui/icons-material/Coffee';
 import { ResponsiveContainer } from 'recharts';
 import kuromoji from 'kuromoji'
 
@@ -21,12 +24,10 @@ export function MainListItem(prop) {
   function getColor(x) {
     for (var i=0; i<prop.vocab.length; ++i) {
       if (prop.vocab[i].arr.includes(x)) {
-        // tmpMatchedVocab[i].count += 1;
         return prop.vocab[i].color;
       }
     }
 
-    // tmpMatchedVocab[tmpMatchedVocab.length-1].count += 1;
     return "#ffffff00";
   }
 
@@ -128,9 +129,15 @@ export function MainListItem(prop) {
   return (
     <React.Fragment>
       <Button variant="contained" component="label" onChange={handleClick}>
-        Load Srt File
+        Load .srt File
         <input type="file" accept=".srt" hidden />
       </Button>
+      <IconButton>
+        <SmileIcon />
+      </IconButton>
+      <IconButton>
+        <Coffee />
+      </IconButton>
       <ResponsiveContainer width="95%" height={400}>
         { renderItems(stateItems) }
       </ResponsiveContainer>
