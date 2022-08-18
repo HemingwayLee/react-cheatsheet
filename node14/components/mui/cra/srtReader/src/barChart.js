@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Cell, Tooltip, Label, ResponsiveContainer } from 'recharts';
 // import { useTheme } from '@mui/material/styles';
   
-export default function VocabularyChart(prop) {
+export default function MatchedChart(prop) {
   // const theme = useTheme();
 
   return (

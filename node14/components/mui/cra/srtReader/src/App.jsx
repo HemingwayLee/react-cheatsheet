@@ -7,10 +7,10 @@ import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import { MainListItem } from './listItems';
-import VocabularyChart from './barChart';
-import RecursiveTreeView from './treeView';
-import CardChart from './cardChart';
+import { SideBarItems } from './sidebar';
+import MatchedChart from './barChart';
+import Mp4Player from './player';
+import VocabChart from './cardChart';
 
 
 const cbColors = ["#d55e0099", "#cc79a799", "#0072b299", "#f0e44299", "#009e7399"];
@@ -78,7 +78,7 @@ export default function Dashboard() {
       <Box sx={{ display: 'flex' }}>
         <Drawer variant="permanent">
           <List component="nav">
-            <MainListItem setMatched={setMatchedVocabValues} vocab={stateVocab} handleJump={onJump2Time} handleMatched={onHandleMatchedVocab}/>
+            <SideBarItems setMatched={setMatchedVocabValues} vocab={stateVocab} handleJump={onJump2Time} handleMatched={onHandleMatchedVocab}/>
           </List>
         </Drawer>
         <Box
@@ -104,7 +104,7 @@ export default function Dashboard() {
                     height: 240,
                   }}
                 >
-                  <VocabularyChart data={stateMatchedVocab} />
+                  <MatchedChart data={stateMatchedVocab} />
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
@@ -116,12 +116,12 @@ export default function Dashboard() {
                     height: 240,
                   }}
                 >
-                  <CardChart data={stateVocab} handleVocabFileLoad={onHandleVocabFileLoad}/>
+                  <VocabChart data={stateVocab} handleVocabFileLoad={onHandleVocabFileLoad}/>
                 </Paper>
               </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <RecursiveTreeView player={playerRef}/>
+                  <Mp4Player player={playerRef}/>
                 </Paper>
               </Grid>
             </Grid>

@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 
 
-export default function CardChart(prop) {
+export default function VocabChart(prop) {
   async function ReadFile(file) {
     return await file.text()
   }
