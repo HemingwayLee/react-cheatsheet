@@ -34,12 +34,15 @@ export default function Dashboard() {
   const [stateMatchedVocab, setMatchedVocabValues] = React.useState([]);
 
   const onJump2Time = (ts) => {
-    console.log(ts);
-    const jump2 = moment.duration(ts.split(',')[0]).asSeconds();
-    console.log(jump2)
+    // console.log(ts);
+    const jump2Sec = moment.duration(ts.split(',')[0]).asSeconds();
+    const jump2MiliSec = ts.split(',')[1]
+    const jump2 = jump2Sec + "." + jump2MiliSec;
+    const offset = -0.8;
+    // console.log(jump2)
 
     if (playerRef) {
-      playerRef.current.seekTo(jump2 - 5.5);
+      playerRef.current.seekTo(parseFloat(jump2) + offset);
     }
   }
 

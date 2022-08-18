@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
+// import LockIcon from '@mui/icons-material/Lock';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 
 
@@ -30,7 +31,8 @@ export default function CardChart(prop) {
   return (
     <React.Fragment>
       <Button variant="contained" component="label" onChange={handleClick}>
-        Load Vocabulary
+        {/* <LockIcon /> */}
+        Load .txt File
         <input type="file" accept=".txt" hidden />
       </Button>
       {/* <h1>Total Vocabulary</h1>

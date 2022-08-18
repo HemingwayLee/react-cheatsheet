@@ -6,8 +6,10 @@ import IconButton from "@mui/material/IconButton";
 import ListItemText from '@mui/material/ListItemText';
 import SmileIcon from "@mui/icons-material/Mood";
 import Coffee from '@mui/icons-material/Coffee';
+import SettingsIcon from "@mui/icons-material/Settings"
 import { ResponsiveContainer } from 'recharts';
-import kuromoji from 'kuromoji'
+import kuromoji from 'kuromoji';
+import SimpleDialog from './profile';
 
 // console.log(` in the build? ${process.env.PUBLIC_URL}`);
 
@@ -19,8 +21,14 @@ kuromoji.builder({ dicPath: '/dict' }).build(function (err, tker) {
 const { default: srtParser2 } = require("srt-parser-2")
 const parser = new srtParser2()
 
+const emails = ['username@gmail.com', 'user02@gmail.com'];
+
 export function MainListItem(prop) {
   const [stateItems, setItemValues] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState(emails[1]);
+
+
   function getColor(x) {
     for (var i=0; i<prop.vocab.length; ++i) {
       if (prop.vocab[i].arr.includes(x)) {
@@ -126,6 +134,16 @@ export function MainListItem(prop) {
     });
   }
 
+  
+  const handleProfileOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+    setSelectedValue(value);
+  };
+
   return (
     <React.Fragment>
       <Button variant="contained" component="label" onChange={handleClick}>
@@ -133,11 +151,16 @@ export function MainListItem(prop) {
         <input type="file" accept=".srt" hidden />
       </Button>
       <IconButton>
-        <SmileIcon />
+        <SettingsIcon />
       </IconButton>
-      <IconButton>
-        <Coffee />
+      <IconButton onClick={handleProfileOpen}>
+        <SmileIcon/>
       </IconButton>
+      <SimpleDialog
+        selectedValue={selectedValue}
+        open={open}
+        onClose={handleClose}
+      />
       <ResponsiveContainer width="95%" height={400}>
         { renderItems(stateItems) }
       </ResponsiveContainer>
