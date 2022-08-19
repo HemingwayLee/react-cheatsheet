@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.90",
     "@mui/material": "^5.8.2",
+    "get-video-id": "^3.6.4",
     "html-react-parser": "^3.0.1",
     "kuromoji": "^0.1.2",
     "kuroshiro": "^1.2.0",

@@ -11,6 +11,9 @@ import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import TextField from '@mui/material/TextField';
+import getVideoId from 'get-video-id';
+// import { getSubtitles } from 'youtube-captions-scraper';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,6 +47,7 @@ export default function SourceDialog(props) {
   const [value, setValue] = React.useState(0);
   const [ytErrorTxt, setYtErrorTxt] = React.useState('');
   const [isYtUrlVaild, setYtUrlVaild] = React.useState(false);
+  const [ytUrl, setYtUrl] = React.useState('');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -55,21 +59,46 @@ export default function SourceDialog(props) {
 
   function handleMp4Load({target}) {
     const selectedFile = target.files[0];
+    props.setVideoHeight('100%')
     props.setVideoFilePath(URL.createObjectURL(selectedFile));
     onClose();
   }
 
+  function checkYtUrl(url) {
+    const {id} = getVideoId(url);
+    if (id) {
+      return true;
+    }
+
+    return false;
+  }
+
   function handleYtChange(event) {
-    if (event.target.value == '1') {
+    const url = event.target.value;
+    setYtUrl(url)
+
+    if (checkYtUrl(url)) {
       setYtErrorTxt('')
       setYtUrlVaild(true)
     } else {
-      setYtErrorTxt('Invalid format: ###-###-####')
+      setYtErrorTxt('Invalid youtube url')
       setYtUrlVaild(false)
     }
   }
 
   function handleYoutubeLoad() {
+    const { id } = getVideoId(ytUrl)
+    
+    // CORS issue, we need to do it in backend
+    // getSubtitles({
+    //   videoID: id + '&origin=https://www.youtube.com'
+    //   // lang: 'fr' // default: `en`
+    // }).then(captions => {
+    //   console.log(captions);
+    // });
+
+    props.setVideoHeight('640px')
+    props.setVideoFilePath(ytUrl);
     onClose();
   }
 
@@ -92,6 +121,7 @@ export default function SourceDialog(props) {
         </TabPanel>
         <TabPanel value={value} index={1}>
           <TextField
+            value={ytUrl}
             error={!isYtUrlVaild}
             required
             helperText={ytErrorTxt}
@@ -100,7 +130,11 @@ export default function SourceDialog(props) {
             onChange={handleYtChange}
           />
           <br />
-          <Button variant="contained" component="label" onClick={handleYoutubeLoad}>
+          <Button 
+            disabled={!isYtUrlVaild}
+            variant="contained" 
+            component="label" 
+            onClick={handleYoutubeLoad}>
             Load YouTube video
           </Button>
         </TabPanel>
