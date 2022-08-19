@@ -11,8 +11,10 @@ import Coffee from '@mui/icons-material/Coffee';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from "@mui/icons-material/Settings";
 import { ResponsiveContainer } from 'recharts';
+// import moment from 'moment';
 import kuromoji from 'kuromoji';
 import ProfileDialog from './profile';
+import SettingsDialog from './settings';
 import Kuroshiro from "kuroshiro";
 import KuromojiAnalyzer from "kuroshiro-analyzer-kuromoji";
 import parse from 'html-react-parser';
@@ -35,7 +37,9 @@ const parser = new srtParser2()
 
 export function SideBarItems(prop) {
   const [stateItems, setItemValues] = React.useState([]);
-  const [open, setOpen] = React.useState(false);
+  const [profileOpen, setProfileOpen] = React.useState(false);
+  const [settingsOpen, setSettingsOpen] = React.useState(false);
+  const [lowerBound, setLowerBound] = React.useState(0.0);
 
   function getColor(x) {
     for (var i=0; i<prop.vocab.length; ++i) {
@@ -119,6 +123,10 @@ export function SideBarItems(prop) {
   }
 
   function initLines(result) {
+    if (result.length > 0) {
+      setLowerBound(prop.getTotalSecMiliSec(result[0].startTime));
+    }
+    
     const tmp = result.map(x => {
       return {
         ...x,
@@ -162,14 +170,14 @@ export function SideBarItems(prop) {
   
   function handleSrtData(data) {
     var result = parser.fromSrt(data);
-    console.log(result);
+    // console.log(result);
   
     initMatchedArr(result);
 
     initLines(result);
   }
   
-  function handleClick({target}) {
+  function handleSrtFileLoad({target}) {
     const selectedFile = target.files[0];
     
     const promise = new Promise(resolve => {
@@ -179,37 +187,93 @@ export function SideBarItems(prop) {
   
     promise.then(fileContent => {
       const filename = selectedFile.name;
-      console.log(filename);
+      // console.log(filename);
   
       handleSrtData(fileContent);
     });
   }
 
-  
-  const handleProfileOpen = () => {
-    setOpen(true);
+  function toHHMMSS (sec) {
+    var sec_num = parseInt(sec, 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    return hours+':'+minutes+':'+seconds;
+  }
+
+  function doShift(ts, offset) {
+    // console.log(`${ts} ===> ${offset}`)
+    const totalSec = prop.getTotalSecMiliSec(ts);
+    const res = Math.round((parseFloat(totalSec) + parseFloat(offset) + Number.EPSILON) * 1000) / 1000;
+    const tmp = res.toFixed(3).toString().split('.');
+    const timeFormat = toHHMMSS(tmp[0])
+    if (tmp.length > 1) {
+      return timeFormat + `.${tmp[1]}`
+    } else {
+      return timeFormat + ',000';
+    }
+  }
+
+  const handleSettingsOpen = () => {
+    setSettingsOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleSettingsClose = () => {
+    setSettingsOpen(false);
   };
+  
+  const handleProfileOpen = () => {
+    setProfileOpen(true);
+  };
+
+  const handleProfileClose = () => {
+    setProfileOpen(false);
+  };
+
+  const handleShiftTime = (sec) => {
+    console.log(sec)
+
+    let tmp = [...stateItems];
+    for (var i=0; i<tmp.length; ++i) {
+      tmp[i].startTime = doShift(tmp[i].startTime, sec)
+      tmp[i].endTime = doShift(tmp[i].endTime, sec)
+    }
+
+    setItemValues(tmp)
+  }
 
   return (
     <React.Fragment>
-      <Button variant="contained" component="label" onChange={handleClick}>
+      <Button variant="contained" component="label" onChange={handleSrtFileLoad}>
         Load .srt File
         <input type="file" accept=".srt" hidden />
       </Button>
-      <IconButton>
+      <IconButton 
+        disabled={stateItems.length === 0}
+        onClick={handleSettingsOpen}
+      >
         <SettingsIcon />
       </IconButton>
-      <IconButton onClick={handleProfileOpen}>
+      <IconButton disabled onClick={handleProfileOpen}>
         <SmileIcon/>
       </IconButton>
-      <IconButton>
+      <IconButton disabled>
         <Coffee />
       </IconButton>
-      <ProfileDialog onClose={handleClose} open={open}/>
+      <ProfileDialog 
+        onClose={handleProfileClose} 
+        open={profileOpen}
+      />
+      <SettingsDialog 
+        lowerBound={lowerBound}
+        shiftStartTime={handleShiftTime}
+        onClose={handleSettingsClose} 
+        open={settingsOpen} 
+      />
       <ResponsiveContainer width="95%" height={400}>
         { renderItems(stateItems) }
       </ResponsiveContainer>

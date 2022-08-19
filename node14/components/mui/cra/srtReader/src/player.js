@@ -5,6 +5,7 @@ import ReactPlayer from 'react-player'
 import SourceDialog from './source';
 
 export default function Mp4Player(prop) {
+  // const [videoFilePath, setVideoFilePath] = React.useState('https://cdn.zoubuting.com/20210719/2pNrlteZ/1000kb/hls/index.m3u8');
   const [videoFilePath, setVideoFilePath] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [videoHeight, setVideoHeight] = React.useState('100%');

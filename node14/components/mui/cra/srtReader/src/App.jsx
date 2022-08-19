@@ -33,16 +33,17 @@ export default function Dashboard() {
   const [stateVocab, setVocabValues] = React.useState([]);
   const [stateMatchedVocab, setMatchedVocabValues] = React.useState([]);
 
+  function getTotalSecMiliSec(ts) {
+    const sec = moment.duration(ts.split(',')[0]).asSeconds();
+    const ms = ts.split(',')[1]
+    return sec + "." + ms;
+  }
+
   const onJump2Time = (ts) => {
-    // console.log(ts);
-    const jump2Sec = moment.duration(ts.split(',')[0]).asSeconds();
-    const jump2MiliSec = ts.split(',')[1]
-    const jump2 = jump2Sec + "." + jump2MiliSec;
-    const offset = -0.8;
-    // console.log(jump2)
+    const jump2 = getTotalSecMiliSec(ts);
 
     if (playerRef) {
-      playerRef.current.seekTo(parseFloat(jump2) + offset);
+      playerRef.current.seekTo(parseFloat(jump2));
     }
   }
 
@@ -78,7 +79,13 @@ export default function Dashboard() {
       <Box sx={{ display: 'flex' }}>
         <Drawer variant="permanent">
           <List component="nav">
-            <SideBarItems setMatched={setMatchedVocabValues} vocab={stateVocab} handleJump={onJump2Time} handleMatched={onHandleMatchedVocab}/>
+            <SideBarItems 
+              getTotalSecMiliSec={getTotalSecMiliSec}
+              setMatched={setMatchedVocabValues} 
+              vocab={stateVocab} 
+              handleJump={onJump2Time} 
+              handleMatched={onHandleMatchedVocab}
+            />
           </List>
         </Drawer>
         <Box

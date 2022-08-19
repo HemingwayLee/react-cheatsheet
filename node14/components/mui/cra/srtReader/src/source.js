@@ -103,7 +103,12 @@ export default function SourceDialog(props) {
   }
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog 
+      fullWidth
+      maxWidth="sm" 
+      onClose={handleClose} 
+      open={open}
+    >
       <DialogTitle>Select a source</DialogTitle>
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
