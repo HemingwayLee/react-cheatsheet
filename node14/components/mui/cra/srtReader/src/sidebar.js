@@ -10,7 +10,6 @@ import SmileIcon from "@mui/icons-material/Mood";
 import Coffee from '@mui/icons-material/Coffee';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from "@mui/icons-material/Settings";
-import Typography from '@mui/material/Typography';
 import { ResponsiveContainer } from 'recharts';
 import kuromoji from 'kuromoji';
 import ProfileDialog from './profile';
@@ -65,31 +64,20 @@ export function SideBarItems(prop) {
       let theOne = tmp.filter(x => x.id == id);
 
       const see = tokenizer.tokenize(theOne[0].text).map(async t => {
-        // (async () => {
-          const mystyle = {
-            backgroundColor: getColor(t.surface_form)
-          };
+        const mystyle = {
+          backgroundColor: getColor(t.surface_form)
+        };
 
-          const res = parse(await kuroshiro.convert(t.surface_form, {
-            mode: "furigana", 
-            to: "hiragana"
-          }))
-          
-          const finalHtml = (<span style={mystyle}> {res} </span>);
-          console.log(finalHtml)
-
-          return finalHtml;
-        // })();
+        const res = parse(await kuroshiro.convert(t.surface_form, {
+          mode: "furigana", 
+          to: "hiragana"
+        }))
+        
+        const finalHtml = (<span style={mystyle}> {res} </span>);
+        
+        return finalHtml;
       });
 
-      console.log("!!!!!???")
-      console.log(await Promise.all(see));
-      console.log("!!!!!???")
-
-      // theOne[0].tokens = parse(await kuroshiro.convert(theOne[0].text, {
-      //   mode: "furigana", 
-      //   to: "hiragana"
-      // }));
 
       theOne[0].tokens = await Promise.all(see);
       tmp[foundIndex] = theOne[0];
@@ -146,7 +134,6 @@ export function SideBarItems(prop) {
       { 
         Array.isArray(items)
           ? items.map(x => {
-            // doTokenization(x);
             return (
               <ListItem key={x.id}>
                 <ListItemButton key={"lbtn1_" + x.id} onClick={() => doFuriganaConvertion(x.id)}>
@@ -184,8 +171,7 @@ export function SideBarItems(prop) {
   
   function handleClick({target}) {
     const selectedFile = target.files[0];
-    // console.log(selectedFile);
-  
+    
     const promise = new Promise(resolve => {
       const fileContent = ReadFile(selectedFile);
       resolve(fileContent);
