@@ -6,7 +6,6 @@ import SourceDialog from './source';
 
 export default function Mp4Player(prop) {
   // const [videoFilePath, setVideoFilePath] = React.useState('https://cdn.zoubuting.com/20210719/2pNrlteZ/1000kb/hls/index.m3u8');
-  const [videoFilePath, setVideoFilePath] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [videoHeight, setVideoHeight] = React.useState('100%');
 
@@ -26,14 +25,14 @@ export default function Mp4Player(prop) {
 
       <SourceDialog 
         onClose={handleClose}
-        setVideoFilePath={setVideoFilePath} 
+        setVideoFilePath={prop.setVideoFilePath} 
         setVideoHeight={setVideoHeight}
         open={open}
       />
 
       <ReactPlayer 
         ref={prop.player}
-        url={videoFilePath} 
+        url={prop.videoFilePath} 
         config={{ youtube: { playerVars: { origin: 'https://www.youtube.com' } } }}
         width={"100%"}
         height={videoHeight} 

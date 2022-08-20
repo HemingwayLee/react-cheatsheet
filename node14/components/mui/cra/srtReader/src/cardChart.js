@@ -15,8 +15,7 @@ export default function VocabChart(prop) {
   
   function handleClick({target}) {
     const selectedFile = target.files[0];
-    // console.log(selectedFile);
-  
+    
     const promise = new Promise(resolve => {
       const fileContent = ReadFile(selectedFile);
       resolve(fileContent);
@@ -31,7 +30,6 @@ export default function VocabChart(prop) {
   return (
     <React.Fragment>
       <Button variant="contained" component="label" onChange={handleClick}>
-        {/* <LockIcon /> */}
         Load .txt File
         <input type="file" accept=".txt" hidden />
       </Button>

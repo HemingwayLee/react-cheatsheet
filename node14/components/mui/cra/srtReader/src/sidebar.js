@@ -41,6 +41,9 @@ export function SideBarItems(prop) {
   const [settingsOpen, setSettingsOpen] = React.useState(false);
   const [lowerBound, setLowerBound] = React.useState(0.0);
 
+  // TODO: redraw after new vocab coming
+  // const [vacab, setVocab] = React.useState([...prop.vocab]);
+
   function getColor(x) {
     for (var i=0; i<prop.vocab.length; ++i) {
       if (prop.vocab[i].arr.includes(x)) {
@@ -133,8 +136,22 @@ export function SideBarItems(prop) {
         "tokens": tokenizer.tokenize(x.text).map(t => doStyling(t.surface_form))
       }
     });
-
     setItemValues(tmp);
+
+    const theRegion = result.map(x => {
+      return {
+        start: prop.getTotalSecMiliSec(x.startTime),
+        end: prop.getTotalSecMiliSec(x.endTime),
+        loop: false,
+        drag: false,
+        resize: false,
+        attributes: {
+          label: x.text
+        },
+        color: 'rgba(255, 0, 0, 0.5)',
+      }
+    })
+    prop.setRegions(theRegion);
   }
 
   const renderItems = (items) => (
@@ -173,7 +190,6 @@ export function SideBarItems(prop) {
     // console.log(result);
   
     initMatchedArr(result);
-
     initLines(result);
   }
   
@@ -235,7 +251,7 @@ export function SideBarItems(prop) {
   };
 
   const handleShiftTime = (sec) => {
-    console.log(sec)
+    // console.log(sec)
 
     let tmp = [...stateItems];
     for (var i=0; i<tmp.length; ++i) {

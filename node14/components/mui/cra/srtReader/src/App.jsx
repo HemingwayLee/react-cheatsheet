@@ -11,9 +11,10 @@ import { SideBarItems } from './sidebar';
 import MatchedChart from './barChart';
 import Mp4Player from './player';
 import VocabChart from './cardChart';
+import WaveForm from './waveform';
 
-
-const cbColors = ["#d55e0099", "#cc79a799", "#0072b299", "#f0e44299", "#009e7399"];
+// const cbColors = ["#d55e0099", "#cc79a799", "#0072b299", "#f0e44299", "#009e7399"];
+const cbColors = ["#d55e0099", "#cc79a799"];
 
 const Drawer = styled(MuiDrawer, {})(
   ({}) => ({
@@ -29,9 +30,13 @@ const Drawer = styled(MuiDrawer, {})(
 const theme = createTheme();
 
 export default function Dashboard() {
+  const waveRef = React.useRef(null);
   const playerRef = React.useRef(null);
+  const timelineRef = React.useRef(null);
+  const [regions, setRegions] = React.useState([]);
   const [stateVocab, setVocabValues] = React.useState([]);
   const [stateMatchedVocab, setMatchedVocabValues] = React.useState([]);
+  const [videoFilePath, setVideoFilePath] = React.useState(null);
 
   function getTotalSecMiliSec(ts) {
     const sec = moment.duration(ts.split(',')[0]).asSeconds();
@@ -52,6 +57,8 @@ export default function Dashboard() {
   }
 
   const onHandleVocabFileLoad = (filename, fileContent) => {
+    console.log(stateVocab.length)
+    
     if (stateVocab.length >= cbColors.length) {
       alert("no more files")
       return
@@ -80,6 +87,7 @@ export default function Dashboard() {
         <Drawer variant="permanent">
           <List component="nav">
             <SideBarItems 
+              setRegions={setRegions}
               getTotalSecMiliSec={getTotalSecMiliSec}
               setMatched={setMatchedVocabValues} 
               vocab={stateVocab} 
@@ -128,7 +136,21 @@ export default function Dashboard() {
               </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Mp4Player player={playerRef}/>
+                  <Mp4Player 
+                    videoFilePath={videoFilePath}
+                    setVideoFilePath={setVideoFilePath}
+                    player={playerRef}
+                  />
+                </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <WaveForm
+                    regions={regions}
+                    wave={waveRef} 
+                    timeline={timelineRef}
+                    videoFilePath={videoFilePath}
+                  />
                 </Paper>
               </Grid>
             </Grid>
