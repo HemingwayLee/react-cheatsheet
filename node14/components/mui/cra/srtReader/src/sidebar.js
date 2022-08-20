@@ -10,6 +10,7 @@ import SmileIcon from "@mui/icons-material/Mood";
 import Coffee from '@mui/icons-material/Coffee';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from "@mui/icons-material/Settings";
+import Tooltip from '@mui/material/Tooltip';
 import { ResponsiveContainer } from 'recharts';
 // import moment from 'moment';
 import kuromoji from 'kuromoji';
@@ -167,11 +168,13 @@ export function SideBarItems(prop) {
           ? items.map(x => {
             return (
               <ListItem key={x.id}>
-                <ListItemButton key={"lbtn1_" + x.id} onClick={() => doFuriganaConvertion(x.id)}>
-                  <ListItemIcon key={"lico_" + x.id}>
-                    <VisibilityIcon />
-                  </ListItemIcon>
-                </ListItemButton>
+                <Tooltip title="Show Furigana (beta)">
+                  <ListItemButton key={"lbtn1_" + x.id} onClick={() => doFuriganaConvertion(x.id)}>
+                    <ListItemIcon key={"lico_" + x.id}>
+                      <VisibilityIcon />
+                    </ListItemIcon>
+                  </ListItemButton>
+                </Tooltip>
                 <ListItemButton key={"lbtn2_" + x.id} onClick={() => prop.handleJump(x.startTime)}>
                   <ListItemText 
                     key={"ltxt_" + x.id} 

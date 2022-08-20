@@ -3,10 +3,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 // import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 
 export default function SettingsDialog(props) {
   const { onClose, open } = props;
+  const [wordings, setWordings] = React.useState('調整全部字幕秒數');
   const [errorTxt, setErrorTxt] = React.useState('');
   const [isSecVaild, setSecVaild] = React.useState(false);
   const [sec, setSecond] = React.useState('');
@@ -33,6 +35,14 @@ export default function SettingsDialog(props) {
     
     const bound = (-1) * parseFloat(props.lowerBound)
     if (isNumeric(theValue)) {
+      const sec = parseFloat(theValue);
+      if (sec >= 0.0) {
+        setWordings(`全部字幕往後${sec}秒`)
+      } else {
+        setWordings(`全部字幕往前${Math.abs(sec)}秒`)
+      }
+
+
       if (parseFloat(theValue) >= bound) {
         setErrorTxt('')
         setSecVaild(true)
@@ -41,6 +51,7 @@ export default function SettingsDialog(props) {
         setSecVaild(false)
       }
     } else {
+      setWordings('調整全部字幕秒數')
       setErrorTxt('Invalid number')
       setSecVaild(false)
     }
@@ -53,7 +64,9 @@ export default function SettingsDialog(props) {
       onClose={handleClose} 
       open={open}
     >
-      <DialogTitle>Shift StartTime in Seconds</DialogTitle>
+      <DialogTitle>Adjust all subtitles</DialogTitle>
+      <InputLabel>{wordings}</InputLabel>
+      <br/>
       <TextField
         value={sec}
         error={!isSecVaild}
