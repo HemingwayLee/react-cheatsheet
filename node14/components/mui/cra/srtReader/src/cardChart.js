@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 
 export default function VocabChart(prop) {
@@ -38,6 +38,7 @@ export default function VocabChart(prop) {
       </h2> */}
       <ResponsiveContainer>
         <PieChart>
+          <Legend verticalAlign="top" height={36}/>
           <Tooltip />
           <Pie data={prop.data} dataKey="count" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80}>
             {

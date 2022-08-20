@@ -13,8 +13,8 @@ import Mp4Player from './player';
 import VocabChart from './cardChart';
 import WaveForm from './waveform';
 
-// const cbColors = ["#d55e0099", "#cc79a799", "#0072b299", "#f0e44299", "#009e7399"];
-const cbColors = ["#d55e0099", "#cc79a799"];
+// const cbColors = ["#d55e0099", "#0072b299", "#cc79a799",  "#f0e44299", "#009e7399"];
+const cbColors = ["#d55e0099", "#0072b299"];
 
 const Drawer = styled(MuiDrawer, {})(
   ({}) => ({
@@ -43,6 +43,14 @@ export default function Dashboard() {
     const sec = moment.duration(ts.split(',')[0]).asSeconds();
     const ms = ts.split(',')[1]
     return sec + "." + ms;
+  }
+
+  const onPlayerPlay = () => {
+    console.log("!!!play!!!")
+  }
+
+  const onPlayerPause = () => {
+    console.log("!!!pause!!!")
   }
 
   const onHandleRegionUpdates = (theRegions) => {
@@ -90,8 +98,6 @@ export default function Dashboard() {
   }
 
   const onHandleVocabFileLoad = (filename, fileContent) => {
-    console.log(stateVocab.length)
-    
     if (stateVocab.length >= cbColors.length) {
       alert("no more files")
       return
@@ -173,6 +179,8 @@ export default function Dashboard() {
                     videoFilePath={videoFilePath}
                     setVideoFilePath={setVideoFilePath}
                     player={playerRef}
+                    onPlayerPlay={onPlayerPlay}
+                    onPlayerPause={onPlayerPause}
                   />
                 </Paper>
               </Grid>

@@ -37,6 +37,8 @@ export default function Mp4Player(prop) {
         width={"100%"}
         height={videoHeight} 
         controls 
+        onPlay={prop.onPlayerPlay}
+        onPause={prop.onPlayerPause}
       />
       
     </React.Fragment>
