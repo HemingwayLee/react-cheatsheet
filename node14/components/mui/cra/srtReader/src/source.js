@@ -12,6 +12,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import TextField from '@mui/material/TextField';
 import getVideoId from 'get-video-id';
+import LockIcon from '@mui/icons-material/Lock';
 // import { getSubtitles } from 'youtube-captions-scraper';
 
 
@@ -125,7 +126,10 @@ export default function SourceDialog(props) {
           </Button>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <TextField
+          <Button variant="contained" disabled>
+            <LockIcon /> Load YouTube video
+          </Button>
+          {/* <TextField
             value={ytUrl}
             error={!isYtUrlVaild}
             required
@@ -141,10 +145,12 @@ export default function SourceDialog(props) {
             component="label" 
             onClick={handleYoutubeLoad}>
             Load YouTube video
-          </Button>
+          </Button> */}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Item Three
+          <Button variant="contained" disabled>
+            <LockIcon /> Load HSL Streaming
+          </Button>
         </TabPanel>
       </Box>
     </Dialog>

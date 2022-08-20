@@ -125,20 +125,8 @@ export function SideBarItems(prop) {
     prop.handleMatched(tmpMatchedVocab);
   }
 
-  function initLines(result) {
-    if (result.length > 0) {
-      setLowerBound(prop.getTotalSecMiliSec(result[0].startTime));
-    }
-    
-    const tmp = result.map(x => {
-      return {
-        ...x,
-        "tokens": tokenizer.tokenize(x.text).map(t => doStyling(t.surface_form))
-      }
-    });
-    setItemValues(tmp);
-
-    const theRegion = result.map(x => {
+  function setRegions(arr) {
+    const theRegion = arr.map(x => {
       return {
         start: prop.getTotalSecMiliSec(x.startTime),
         end: prop.getTotalSecMiliSec(x.endTime),
@@ -151,7 +139,25 @@ export function SideBarItems(prop) {
         color: 'rgba(255, 0, 0, 0.5)',
       }
     })
-    prop.setRegions(theRegion);
+
+    console.log(theRegion)
+
+    prop.handleRegionUpdates(theRegion);
+  }
+
+  function initLines(result) {
+    if (result.length > 0) {
+      setLowerBound(prop.getTotalSecMiliSec(result[0].startTime));
+    }
+    
+    const tmp = result.map(x => {
+      return {
+        ...x,
+        "tokens": tokenizer.tokenize(x.text).map(t => doStyling(t.surface_form))
+      }
+    });
+    setItemValues(tmp);
+    setRegions(result);
   }
 
   const renderItems = (items) => (
@@ -227,10 +233,11 @@ export function SideBarItems(prop) {
     const res = Math.round((parseFloat(totalSec) + parseFloat(offset) + Number.EPSILON) * 1000) / 1000;
     const tmp = res.toFixed(3).toString().split('.');
     const timeFormat = toHHMMSS(tmp[0])
+
     if (tmp.length > 1) {
-      return timeFormat + `.${tmp[1]}`
+      return `${timeFormat},${tmp[1]}`
     } else {
-      return timeFormat + ',000';
+      return `${timeFormat},000`;
     }
   }
 
@@ -258,8 +265,8 @@ export function SideBarItems(prop) {
       tmp[i].startTime = doShift(tmp[i].startTime, sec)
       tmp[i].endTime = doShift(tmp[i].endTime, sec)
     }
-
     setItemValues(tmp)
+    setRegions(tmp);
   }
 
   return (

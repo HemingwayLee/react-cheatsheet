@@ -28,6 +28,7 @@ export default function WaveForm(prop) {
         });
 
         wavesurfer.load(prop.videoFilePath)
+        prop.setWavesurfer(wavesurfer)
       }
     }, []);
   }

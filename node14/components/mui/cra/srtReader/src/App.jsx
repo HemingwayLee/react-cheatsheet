@@ -37,11 +37,44 @@ export default function Dashboard() {
   const [stateVocab, setVocabValues] = React.useState([]);
   const [stateMatchedVocab, setMatchedVocabValues] = React.useState([]);
   const [videoFilePath, setVideoFilePath] = React.useState(null);
+  const [objWavesurfer, setWavesurfer] = React.useState(null);
 
   function getTotalSecMiliSec(ts) {
     const sec = moment.duration(ts.split(',')[0]).asSeconds();
     const ms = ts.split(',')[1]
     return sec + "." + ms;
+  }
+
+  const onHandleRegionUpdates = (theRegions) => {
+    setRegions(theRegions);
+    if (waveRef && objWavesurfer) {
+      objWavesurfer.clearRegions();
+      for (var i=0; i<theRegions.length; ++i) {
+        objWavesurfer.addRegion(theRegions[i])
+      }
+    }
+
+    // if (waveRef && objWavesurfer) {
+    //   const wavesurfer = WaveSurfer.create({
+    //     container: waveRef.current,
+    //     interact: false,
+    //     // waveColor: 'violet',
+    //     // progressColor: 'blue',
+    //     fillParent: false,
+    //     scrollParent: true,
+    //     minPxPerSec: 75, 
+    //     plugins: [
+    //       RegionsPlugin.create({
+    //         regions: theRegions
+    //       }),
+    //       TimelinePlugin.create({
+    //         container: timelineRef.current
+    //       })
+    //     ]
+    //   });
+    //   wavesurfer.load(videoFilePath)
+    //   setWavesurfer(wavesurfer)
+    // }
   }
 
   const onJump2Time = (ts) => {
@@ -87,7 +120,7 @@ export default function Dashboard() {
         <Drawer variant="permanent">
           <List component="nav">
             <SideBarItems 
-              setRegions={setRegions}
+              handleRegionUpdates={onHandleRegionUpdates}
               getTotalSecMiliSec={getTotalSecMiliSec}
               setMatched={setMatchedVocabValues} 
               vocab={stateVocab} 
@@ -146,6 +179,7 @@ export default function Dashboard() {
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <WaveForm
+                    setWavesurfer={setWavesurfer}
                     regions={regions}
                     wave={waveRef} 
                     timeline={timelineRef}
