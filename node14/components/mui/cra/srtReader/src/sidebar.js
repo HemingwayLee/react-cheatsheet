@@ -36,14 +36,18 @@ kuromoji.builder({ dicPath: '/dict/kuromoji' }).build(function (err, tker) {
 const { default: srtParser2 } = require("srt-parser-2")
 const parser = new srtParser2()
 
-export function SideBarItems(prop) {
+const SideBarItems = ((prop, ref) => {
   const [stateItems, setItemValues] = React.useState([]);
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [settingsOpen, setSettingsOpen] = React.useState(false);
   const [lowerBound, setLowerBound] = React.useState(0.0);
 
-  // TODO: redraw after new vocab coming
-  // const [vacab, setVocab] = React.useState([...prop.vocab]);
+  React.useImperativeHandle(ref, () => ({
+    doReRender() {
+      console.log("re!!!!")
+      doRedraw()
+    }
+  }), [doRedraw]);
 
   function getColor(x) {
     for (var i=0; i<prop.vocab.length; ++i) {
@@ -61,6 +65,14 @@ export function SideBarItems(prop) {
     };
 
     return (<span style={mystyle}> {t} </span>)
+  }
+
+  function doRedraw() {
+    let tmp = [...stateItems];
+    for (var i=0; i<tmp.length; ++i) {
+      tmp[i].tokens = tokenizer.tokenize(tmp[i].text).map(t => doStyling(t.surface_form))
+    }
+    setItemValues(tmp);
   }
 
   function doFuriganaConvertion (id) {
@@ -141,7 +153,7 @@ export function SideBarItems(prop) {
       }
     })
 
-    console.log(theRegion)
+    // console.log(theRegion)
 
     prop.handleRegionUpdates(theRegion);
   }
@@ -203,6 +215,10 @@ export function SideBarItems(prop) {
   }
   
   function handleSrtFileLoad({target}) {
+    if (target.files.length < 1) {
+      return
+    }
+
     const selectedFile = target.files[0];
     
     const promise = new Promise(resolve => {
@@ -305,4 +321,6 @@ export function SideBarItems(prop) {
       </ResponsiveContainer>
     </React.Fragment>
   );
-}
+})
+
+export default React.forwardRef(SideBarItems)

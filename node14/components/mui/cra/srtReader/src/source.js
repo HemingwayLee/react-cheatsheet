@@ -59,6 +59,10 @@ export default function SourceDialog(props) {
   };
 
   function handleMp4Load({target}) {
+    if (target.files.length < 1) {
+      return
+    }
+
     const selectedFile = target.files[0];
     props.setVideoHeight('100%')
     props.setVideoFilePath(URL.createObjectURL(selectedFile));

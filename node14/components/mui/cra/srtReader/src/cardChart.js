@@ -13,6 +13,10 @@ export default function VocabChart(prop) {
   }
   
   function handleClick({target}) {
+    if (target.files.length < 1) {
+      return
+    }
+
     const selectedFile = target.files[0];
     
     const promise = new Promise(resolve => {

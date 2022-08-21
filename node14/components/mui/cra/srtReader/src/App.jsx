@@ -7,7 +7,7 @@ import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import { SideBarItems } from './sidebar';
+import SideBarItems from './sidebar';
 import MatchedChart from './barChart';
 import Mp4Player from './player';
 import VocabChart from './cardChart';
@@ -33,6 +33,7 @@ export default function Dashboard() {
   const waveRef = React.useRef(null);
   const playerRef = React.useRef(null);
   const timelineRef = React.useRef(null);
+  const sidebarRef = React.useRef(null);
   const [regions, setRegions] = React.useState([]);
   const [stateVocab, setVocabValues] = React.useState([]);
   const [stateMatchedVocab, setMatchedVocabValues] = React.useState([]);
@@ -61,28 +62,6 @@ export default function Dashboard() {
         objWavesurfer.addRegion(theRegions[i])
       }
     }
-
-    // if (waveRef && objWavesurfer) {
-    //   const wavesurfer = WaveSurfer.create({
-    //     container: waveRef.current,
-    //     interact: false,
-    //     // waveColor: 'violet',
-    //     // progressColor: 'blue',
-    //     fillParent: false,
-    //     scrollParent: true,
-    //     minPxPerSec: 75, 
-    //     plugins: [
-    //       RegionsPlugin.create({
-    //         regions: theRegions
-    //       }),
-    //       TimelinePlugin.create({
-    //         container: timelineRef.current
-    //       })
-    //     ]
-    //   });
-    //   wavesurfer.load(videoFilePath)
-    //   setWavesurfer(wavesurfer)
-    // }
   }
 
   const onJump2Time = (ts) => {
@@ -103,11 +82,13 @@ export default function Dashboard() {
       return
     }
 
+    if (stateVocab.filter(v => v.name == filename).length > 0) {
+      alert("file exists")
+      return
+    }
+
     let tmp = [...stateVocab];
-
     const arr = fileContent.split("\r\n");
-    // console.log(arr)
-
     tmp.push({
       "name": filename,
       "arr": arr,
@@ -115,9 +96,11 @@ export default function Dashboard() {
       "color": cbColors[stateVocab.length]
     });
 
-    // console.log(tmp)
-
     setVocabValues(tmp);
+
+    if (sidebarRef) {
+      sidebarRef.current.doReRender();
+    }
   }
   
   return (
@@ -126,6 +109,7 @@ export default function Dashboard() {
         <Drawer variant="permanent">
           <List component="nav">
             <SideBarItems 
+              ref={sidebarRef}
               handleRegionUpdates={onHandleRegionUpdates}
               getTotalSecMiliSec={getTotalSecMiliSec}
               setMatched={setMatchedVocabValues} 
