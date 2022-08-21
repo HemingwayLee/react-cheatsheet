@@ -19,6 +19,7 @@ import SettingsDialog from './settings';
 import Kuroshiro from "kuroshiro";
 import KuromojiAnalyzer from "kuroshiro-analyzer-kuromoji";
 import parse from 'html-react-parser';
+import { getThemeProps } from '@mui/system';
 
 const kuroshiro = new Kuroshiro();
 
@@ -44,10 +45,9 @@ const SideBarItems = ((prop, ref) => {
 
   React.useImperativeHandle(ref, () => ({
     doReRender() {
-      console.log("re!!!!")
-      doRedraw()
+      doRedrawWithNewVocabFile()
     }
-  }), [doRedraw]);
+  }), [doRedrawWithNewVocabFile]);
 
   function getColor(x) {
     for (var i=0; i<prop.vocab.length; ++i) {
@@ -67,12 +67,16 @@ const SideBarItems = ((prop, ref) => {
     return (<span style={mystyle}> {t} </span>)
   }
 
-  function doRedraw() {
+  function doRedrawWithNewVocabFile() {
+    let tmpMatchedVocab = doInitMatchedArr();
+
     let tmp = [...stateItems];
     for (var i=0; i<tmp.length; ++i) {
       tmp[i].tokens = tokenizer.tokenize(tmp[i].text).map(t => doStyling(t.surface_form))
+      tokenizer.tokenize(tmp[i].text).map(x => doMatching(tmpMatchedVocab, x.surface_form))
     }
     setItemValues(tmp);
+    prop.handleMatched(tmpMatchedVocab);
   }
 
   function doFuriganaConvertion (id) {
@@ -116,8 +120,8 @@ const SideBarItems = ((prop, ref) => {
     tmpMatchedVocab[tmpMatchedVocab.length-1].count += 1;
   }
 
-  function initMatchedArr(result) {
-    let tmpMatchedVocab = prop.vocab.map((x, idx) => {
+  function doInitMatchedArr() {
+    let tmp = prop.vocab.map((x, idx) => {
       return {
         "name": prop.vocab[idx].name,
         "count": 0,
@@ -125,11 +129,17 @@ const SideBarItems = ((prop, ref) => {
       }
     });
     
-    tmpMatchedVocab.push({
+    tmp.push({
       "name": "others",
       "count": 0,
       "color": "black"
     })
+
+    return tmp;
+  }
+
+  function initMatchedArr(result) {
+    let tmpMatchedVocab = doInitMatchedArr();
 
     result.map(x => {
       tokenizer.tokenize(x.text).map(x => doMatching(tmpMatchedVocab, x.surface_form))
