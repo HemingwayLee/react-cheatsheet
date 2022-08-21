@@ -38,6 +38,7 @@ export default function Dashboard() {
   const [stateVocab, setVocabValues] = React.useState([]);
   const [stateMatchedVocab, setMatchedVocabValues] = React.useState([]);
   const [videoFilePath, setVideoFilePath] = React.useState(null);
+  const [videoControls, setVideoControls] = React.useState(false);
   const [objWavesurfer, setWavesurfer] = React.useState(null);
 
   function getTotalSecMiliSec(ts) {
@@ -49,14 +50,21 @@ export default function Dashboard() {
   const onPlayerPlay = () => {
     if (waveRef && objWavesurfer) {
       objWavesurfer.play();
-      // objWavesurfer.setMute(true);
     }
   }
 
   const onPlayerPause = () => {
     if (waveRef && objWavesurfer) {
       objWavesurfer.pause();
-      // objWavesurfer.setMute(true);
+    }
+  }
+
+  const onWaveDrawnReady = () => {
+    if (playerRef) {
+      // console.log("!!!!!!!!!!! ready")
+      // playerRef.current.props.controls = true;
+      // console.log(playerRef)
+      setVideoControls(true)
     }
   }
 
@@ -83,7 +91,6 @@ export default function Dashboard() {
 
     if (waveRef && objWavesurfer) {
       objWavesurfer.seekTo(jump2 / objWavesurfer.getDuration());
-      // objWavesurfer.setMute(true);
     }
   }
 
@@ -176,6 +183,7 @@ export default function Dashboard() {
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Mp4Player 
                     videoFilePath={videoFilePath}
+                    videoControls={videoControls}
                     setVideoFilePath={setVideoFilePath}
                     player={playerRef}
                     onPlayerPlay={onPlayerPlay}
@@ -192,6 +200,7 @@ export default function Dashboard() {
                     wave={waveRef} 
                     timeline={timelineRef}
                     videoFilePath={videoFilePath}
+                    waveDrawnReady={onWaveDrawnReady}
                   />
                 </Paper>
               </Grid>

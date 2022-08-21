@@ -1,5 +1,4 @@
 import React from "react";
-// import { ResponsiveContainer } from 'recharts';
 import Button from '@mui/material/Button';
 import ReactPlayer from 'react-player'
 import SourceDialog from './source';
@@ -36,7 +35,7 @@ export default function Mp4Player(prop) {
         config={{ youtube: { playerVars: { origin: 'https://www.youtube.com' } } }}
         width={"100%"}
         height={videoHeight} 
-        controls 
+        controls={prop.videoControls} 
         onPlay={prop.onPlayerPlay}
         onPause={prop.onPlayerPause}
         // onProgress={prop.onPlayerProgress}

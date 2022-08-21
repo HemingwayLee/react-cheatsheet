@@ -29,6 +29,7 @@ export default function WaveForm(prop) {
 
         wavesurfer.load(prop.videoFilePath)
         wavesurfer.setMute(true);
+        wavesurfer.on('ready', prop.waveDrawnReady);
         prop.setWavesurfer(wavesurfer)
       }
     }, []);
