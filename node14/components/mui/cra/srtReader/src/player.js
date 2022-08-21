@@ -39,6 +39,7 @@ export default function Mp4Player(prop) {
         controls 
         onPlay={prop.onPlayerPlay}
         onPause={prop.onPlayerPause}
+        // onProgress={prop.onPlayerProgress}
       />
       
     </React.Fragment>

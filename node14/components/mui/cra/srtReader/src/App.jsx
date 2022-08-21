@@ -47,12 +47,22 @@ export default function Dashboard() {
   }
 
   const onPlayerPlay = () => {
-    console.log("!!!play!!!")
+    if (waveRef && objWavesurfer) {
+      objWavesurfer.play();
+      // objWavesurfer.setMute(true);
+    }
   }
 
   const onPlayerPause = () => {
-    console.log("!!!pause!!!")
+    if (waveRef && objWavesurfer) {
+      objWavesurfer.pause();
+      // objWavesurfer.setMute(true);
+    }
   }
+
+  // const onPlayerProgress = (progress) => {
+  //   console.log(progress)
+  // }
 
   const onHandleRegionUpdates = (theRegions) => {
     setRegions(theRegions);
@@ -65,10 +75,15 @@ export default function Dashboard() {
   }
 
   const onJump2Time = (ts) => {
-    const jump2 = getTotalSecMiliSec(ts);
+    const jump2 = parseFloat(getTotalSecMiliSec(ts));
 
     if (playerRef) {
-      playerRef.current.seekTo(parseFloat(jump2));
+      playerRef.current.seekTo(jump2);
+    }
+
+    if (waveRef && objWavesurfer) {
+      objWavesurfer.seekTo(jump2 / objWavesurfer.getDuration());
+      // objWavesurfer.setMute(true);
     }
   }
 
@@ -165,6 +180,7 @@ export default function Dashboard() {
                     player={playerRef}
                     onPlayerPlay={onPlayerPlay}
                     onPlayerPause={onPlayerPause}
+                    // onPlayerProgress={onPlayerProgress}
                   />
                 </Paper>
               </Grid>

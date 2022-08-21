@@ -102,7 +102,6 @@ const SideBarItems = ((prop, ref) => {
         return finalHtml;
       });
 
-
       theOne[0].tokens = await Promise.all(see);
       tmp[foundIndex] = theOne[0];
       setItemValues(tmp)
