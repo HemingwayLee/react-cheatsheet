@@ -309,7 +309,7 @@ const SideBarItems = ((prop, ref) => {
       >
         <SettingsIcon />
       </IconButton>
-      <IconButton disabled onClick={handleProfileOpen}>
+      <IconButton onClick={handleProfileOpen}>
         <SmileIcon/>
       </IconButton>
       <IconButton disabled>
