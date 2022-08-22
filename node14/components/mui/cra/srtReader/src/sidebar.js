@@ -43,6 +43,12 @@ const SideBarItems = ((prop, ref) => {
   const [settingsOpen, setSettingsOpen] = React.useState(false);
   const [lowerBound, setLowerBound] = React.useState(0.0);
 
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleItemSelected = (idx) => {
+    setSelectedIndex(idx);
+  };
+
   React.useImperativeHandle(ref, () => ({
     doReRender() {
       doRedrawWithNewVocabFile()
@@ -186,7 +192,7 @@ const SideBarItems = ((prop, ref) => {
     <div>
       { 
         Array.isArray(items)
-          ? items.map(x => {
+          ? items.map((x, idx) => {
             return (
               <ListItem key={x.id}>
                 <Tooltip title="Show Furigana (beta)">
@@ -196,7 +202,14 @@ const SideBarItems = ((prop, ref) => {
                     </ListItemIcon>
                   </ListItemButton>
                 </Tooltip>
-                <ListItemButton key={"lbtn2_" + x.id} onClick={() => prop.handleJump(x.startTime)}>
+                <ListItemButton 
+                  selected={selectedIndex === idx} 
+                  key={"lbtn2_" + x.id} 
+                  onClick={() => {
+                    handleItemSelected(idx)
+                    prop.handleJump(x.startTime)
+                  }}
+                >
                   <ListItemText 
                     key={"ltxt_" + x.id} 
                     primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
