@@ -12,11 +12,11 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import doCaesarCipher from './shift'
 
 const links = [
-  { 
-    name: doCaesarCipher('Xfcqbhf', -1), 
-    uri: doCaesarCipher('iuuqt;00ifnjohxbzmff/hjuivc/jp0', -1),
-    icon: (props) => <PersonIcon {...props} /> 
-  },
+  // { 
+  //   name: doCaesarCipher('Xfcqbhf', -1), 
+  //   uri: doCaesarCipher('iuuqt;00ifnjohxbzmff/hjuivc/jp0', -1),
+  //   icon: (props) => <PersonIcon {...props} /> 
+  // },
   { 
     name: doCaesarCipher('Gbdfcppl', -1), 
     uri: doCaesarCipher('iuuqt;00xxx/gbdfcppl/dpn0qsbdjowfstf', -1),

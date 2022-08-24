@@ -43,11 +43,11 @@ const SideBarItems = ((prop, ref) => {
   const [settingsOpen, setSettingsOpen] = React.useState(false);
   const [lowerBound, setLowerBound] = React.useState(0.0);
 
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  // const [selectedIndex, setSelectedIndex] = React.useState(1);
 
-  const handleItemSelected = (idx) => {
-    setSelectedIndex(idx);
-  };
+  // const handleItemSelected = (idx) => {
+  //   setSelectedIndex(idx);
+  // };
 
   React.useImperativeHandle(ref, () => ({
     doReRender() {
@@ -203,10 +203,10 @@ const SideBarItems = ((prop, ref) => {
                   </ListItemButton>
                 </Tooltip>
                 <ListItemButton 
-                  selected={selectedIndex === idx} 
+                  // selected={selectedIndex === idx} 
                   key={"lbtn2_" + x.id} 
                   onClick={() => {
-                    handleItemSelected(idx)
+                    // handleItemSelected(idx)
                     prop.handleJump(x.startTime)
                   }}
                 >

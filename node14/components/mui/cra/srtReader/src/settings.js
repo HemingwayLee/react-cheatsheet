@@ -68,6 +68,7 @@ export default function SettingsDialog(props) {
       <InputLabel>{wordings}</InputLabel>
       <br/>
       <TextField
+        autoComplete='off'
         value={sec}
         error={!isSecVaild}
         required

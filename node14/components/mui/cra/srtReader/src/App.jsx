@@ -60,17 +60,11 @@ export default function Dashboard() {
   }
 
   const onWaveDrawnReady = () => {
+    console.log("ready")
     if (playerRef) {
-      // console.log("!!!!!!!!!!! ready")
-      // playerRef.current.props.controls = true;
-      // console.log(playerRef)
       setVideoControls(true)
     }
   }
-
-  // const onPlayerProgress = (progress) => {
-  //   console.log(progress)
-  // }
 
   const onHandleRegionUpdates = (theRegions) => {
     setRegions(theRegions);
@@ -186,6 +180,7 @@ export default function Dashboard() {
                     videoControls={videoControls}
                     setVideoFilePath={setVideoFilePath}
                     player={playerRef}
+                    objWavesurfer={objWavesurfer}
                     onPlayerPlay={onPlayerPlay}
                     onPlayerPause={onPlayerPause}
                     // onPlayerProgress={onPlayerProgress}

@@ -26,13 +26,20 @@ export default function Mp4Player(prop) {
         onClose={handleClose}
         setVideoFilePath={prop.setVideoFilePath} 
         setVideoHeight={setVideoHeight}
+        objWavesurfer={prop.objWavesurfer}
         open={open}
       />
 
-      <ReactPlayer 
+      <ReactPlayer
+        // TODO: Not working yet..., use personal control?
+        // onKeyPress={Keyboard.dismiss}
         ref={prop.player}
         url={prop.videoFilePath} 
-        config={{ youtube: { playerVars: { origin: 'https://www.youtube.com' } } }}
+        config={{ 
+          youtube: { 
+            playerVars: { origin: 'https://www.youtube.com' } 
+          } 
+        }}
         width={"100%"}
         height={videoHeight} 
         controls={prop.videoControls} 

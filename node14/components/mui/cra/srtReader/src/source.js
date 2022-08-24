@@ -64,8 +64,15 @@ export default function SourceDialog(props) {
     }
 
     const selectedFile = target.files[0];
+    const url = URL.createObjectURL(selectedFile)
+
     props.setVideoHeight('100%')
-    props.setVideoFilePath(URL.createObjectURL(selectedFile));
+    props.setVideoFilePath(url);
+
+    if (props.objWavesurfer) {
+      props.objWavesurfer.load(url)
+    }
+
     onClose();
   }
 
