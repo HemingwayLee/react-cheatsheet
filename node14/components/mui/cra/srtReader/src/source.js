@@ -67,6 +67,7 @@ export default function SourceDialog(props) {
     const url = URL.createObjectURL(selectedFile)
 
     props.setVideoHeight('100%')
+    props.setVideoControls(false)
     props.setVideoFilePath(url);
 
     if (props.objWavesurfer) {

@@ -59,8 +59,14 @@ export default function Dashboard() {
     }
   }
 
+  const onPlayerSeek = (event) => {
+    // console.log(event)
+    if (waveRef && objWavesurfer) {
+      objWavesurfer.seekTo(event / objWavesurfer.getDuration());
+    }
+  }
+
   const onWaveDrawnReady = () => {
-    console.log("ready")
     if (playerRef) {
       setVideoControls(true)
     }
@@ -83,9 +89,9 @@ export default function Dashboard() {
       playerRef.current.seekTo(jump2);
     }
 
-    if (waveRef && objWavesurfer) {
-      objWavesurfer.seekTo(jump2 / objWavesurfer.getDuration());
-    }
+    // if (waveRef && objWavesurfer) {
+    //   objWavesurfer.seekTo(jump2 / objWavesurfer.getDuration());
+    // }
   }
 
   const onHandleMatchedVocab = (arr) => {
@@ -179,11 +185,12 @@ export default function Dashboard() {
                     videoFilePath={videoFilePath}
                     videoControls={videoControls}
                     setVideoFilePath={setVideoFilePath}
+                    setVideoControls={setVideoControls}
                     player={playerRef}
                     objWavesurfer={objWavesurfer}
                     onPlayerPlay={onPlayerPlay}
                     onPlayerPause={onPlayerPause}
-                    // onPlayerProgress={onPlayerProgress}
+                    onPlayerSeek={onPlayerSeek}
                   />
                 </Paper>
               </Grid>

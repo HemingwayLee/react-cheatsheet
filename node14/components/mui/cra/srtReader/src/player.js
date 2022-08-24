@@ -25,14 +25,13 @@ export default function Mp4Player(prop) {
       <SourceDialog 
         onClose={handleClose}
         setVideoFilePath={prop.setVideoFilePath} 
+        setVideoControls={prop.setVideoControls}
         setVideoHeight={setVideoHeight}
         objWavesurfer={prop.objWavesurfer}
         open={open}
       />
 
       <ReactPlayer
-        // TODO: Not working yet..., use personal control?
-        // onKeyPress={Keyboard.dismiss}
         ref={prop.player}
         url={prop.videoFilePath} 
         config={{ 
@@ -45,7 +44,7 @@ export default function Mp4Player(prop) {
         controls={prop.videoControls} 
         onPlay={prop.onPlayerPlay}
         onPause={prop.onPlayerPause}
-        // onProgress={prop.onPlayerProgress}
+        onSeek={prop.onPlayerSeek}
       />
       
     </React.Fragment>
