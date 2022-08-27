@@ -3,5 +3,6 @@ export default {
   "txt_file_exists": "File already exists",
   "matched_vocabulary": "Matched Vocabulary",
   "contact_me": "Contact Me",
-  "facebook": "Facebook"
+  "facebook": "Facebook",
+  "load_txt_file": "Load .txt File",
 }

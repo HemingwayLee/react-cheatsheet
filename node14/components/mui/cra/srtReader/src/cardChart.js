@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
+import intl from 'react-intl-universal';
 
 export default function VocabChart(prop) {
   async function ReadFile(file) {
@@ -33,7 +33,7 @@ export default function VocabChart(prop) {
   return (
     <React.Fragment>
       <Button variant="contained" component="label" onChange={handleClick}>
-        Load .txt File
+        {intl.get("load_txt_file")}
         <input type="file" accept=".txt" hidden />
       </Button>
       {/* <h1>Total Vocabulary</h1>

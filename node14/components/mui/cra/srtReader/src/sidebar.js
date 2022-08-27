@@ -11,6 +11,10 @@ import Coffee from '@mui/icons-material/Coffee';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from "@mui/icons-material/Settings";
 import Tooltip from '@mui/material/Tooltip';
+import LanguageIcon from '@mui/icons-material/Language';
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+
 import { ResponsiveContainer } from 'recharts';
 // import moment from 'moment';
 import kuromoji from 'kuromoji';
@@ -19,7 +23,10 @@ import SettingsDialog from './settings';
 import Kuroshiro from "kuroshiro";
 import KuromojiAnalyzer from "kuroshiro-analyzer-kuromoji";
 import parse from 'html-react-parser';
-import { getThemeProps } from '@mui/system';
+// import { getThemeProps } from '@mui/system';
+import intl from 'react-intl-universal';
+import en_US from './lang/en_US.js';
+import zh_TW from './lang/zh_TW.js';
 
 const kuroshiro = new Kuroshiro();
 
@@ -37,17 +44,50 @@ kuromoji.builder({ dicPath: '/dict/kuromoji' }).build(function (err, tker) {
 const { default: srtParser2 } = require("srt-parser-2")
 const parser = new srtParser2()
 
+const langs = [{
+  title: "English", filename: "en_US"
+},{
+  title: "中文(繁體)", filename: "zh_TW"
+}];
+
 const SideBarItems = ((prop, ref) => {
   const [stateItems, setItemValues] = React.useState([]);
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [settingsOpen, setSettingsOpen] = React.useState(false);
   const [lowerBound, setLowerBound] = React.useState(0.0);
 
+  // NOTE: too slow...
   // const [selectedIndex, setSelectedIndex] = React.useState(1);
-
   // const handleItemSelected = (idx) => {
   //   setSelectedIndex(idx);
   // };
+
+  const [anchorEle, setAnchorEle] = React.useState(null);
+  const handleLangClick = e => {
+    setAnchorEle(e.currentTarget);
+  };
+  
+  const handleLangClose = () => {
+    setAnchorEle(null);
+  };
+
+  const langItemClick = e => {
+    const { myValue } = e.target.dataset;
+    
+    intl.init({
+      currentLocale: myValue,
+      locales: {
+        en_US,
+        zh_TW
+      }
+    });
+
+    sessionStorage['lang'] = myValue;
+    
+    handleLangClose()
+
+    window.location.reload();
+  };
 
   React.useImperativeHandle(ref, () => ({
     doReRender() {
@@ -328,6 +368,25 @@ const SideBarItems = ((prop, ref) => {
       <IconButton disabled>
         <Coffee />
       </IconButton>
+      <IconButton onClick={handleLangClick}>
+        <LanguageIcon />
+      </IconButton>
+      <Menu
+        anchorEl={anchorEle}
+        keepMounted
+        open={Boolean(anchorEle)}
+        onClose={handleLangClose}
+      >
+        {langs.map((lang, idx) => (
+          <MenuItem 
+            onClick={langItemClick} 
+            key={`lang${idx}`} 
+            data-my-value={lang.filename}
+          >
+            {lang.title}
+          </MenuItem>
+        ))}
+      </Menu>
       <ProfileDialog 
         onClose={handleProfileClose} 
         open={profileOpen}

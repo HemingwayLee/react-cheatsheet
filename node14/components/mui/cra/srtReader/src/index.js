@@ -6,7 +6,7 @@ import en_US from './lang/en_US.js';
 import zh_TW from './lang/zh_TW.js';
 
 intl.init({
-  currentLocale: 'en_US',
+  currentLocale: sessionStorage['lang'] ? sessionStorage['lang'] : 'en_US',
   locales: {
     en_US,
     zh_TW
