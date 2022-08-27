@@ -10,6 +10,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import doCaesarCipher from './shift'
+import intl from 'react-intl-universal';
 
 const links = [
   // { 
@@ -18,12 +19,12 @@ const links = [
   //   icon: (props) => <PersonIcon {...props} /> 
   // },
   { 
-    name: doCaesarCipher('Gbdfcppl', -1), 
+    name: doCaesarCipher('gbdfcppl', -1), 
     uri: doCaesarCipher('iuuqt;00xxx/gbdfcppl/dpn0qsbdjowfstf', -1),
     icon: (props) => <FacebookIcon {...props} /> 
   },
   {
-    name: doCaesarCipher('Jotubhsbn', -1),
+    name: doCaesarCipher('jotubhsbn', -1),
     uri: doCaesarCipher('iuuqt;00xxx/jotubhsbn/dpn0mffifnjohxbz15250', -1),
     icon: (props) => <InstagramIcon {...props} /> 
   }
@@ -38,7 +39,7 @@ export default function ProfileDialog(props) {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Contact Me</DialogTitle>
+      <DialogTitle>{intl.get('contact_me')}</DialogTitle>
       <List sx={{ pt: 0 }}>
         {
           links.map((link) => {

@@ -12,9 +12,10 @@ import MatchedChart from './barChart';
 import Mp4Player from './player';
 import VocabChart from './cardChart';
 import WaveForm from './waveform';
+import intl from 'react-intl-universal';
 
-// const cbColors = ["#d55e0099", "#0072b299", "#cc79a799",  "#f0e44299", "#009e7399"];
-const cbColors = ["#d55e0099", "#0072b299"];
+const cbColors = ["#d55e0099", "#0072b299", "#cc79a799",  "#f0e44299", "#009e7399"];
+// const cbColors = ["#d55e0099", "#0072b299"];
 
 const Drawer = styled(MuiDrawer, {})(
   ({}) => ({
@@ -100,12 +101,12 @@ export default function Dashboard() {
 
   const onHandleVocabFileLoad = (filename, fileContent) => {
     if (stateVocab.length >= cbColors.length) {
-      alert("no more files")
+      alert(intl.get("no_more_files"))
       return
     }
 
     if (stateVocab.filter(v => v.name == filename).length > 0) {
-      alert("file exists")
+      alert(intl.get("txt_file_exists"))
       return
     }
 

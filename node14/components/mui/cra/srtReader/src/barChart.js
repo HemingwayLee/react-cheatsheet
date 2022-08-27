@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Cell, Tooltip, Label, ResponsiveContainer } from 'recharts';
-// import { useTheme } from '@mui/material/styles';
+import intl from 'react-intl-universal';
   
 export default function MatchedChart(prop) {
-  // const theme = useTheme();
-
   return (
     <React.Fragment>
-      <h2>Matched Vocabulary</h2>
+      <h2>{intl.get("matched_vocabulary")}</h2>
       <ResponsiveContainer>
         <BarChart data={prop.data}
           layout="vertical" barCategoryGap={1}>
