@@ -235,7 +235,7 @@ const SideBarItems = ((prop, ref) => {
           ? items.map((x, idx) => {
             return (
               <ListItem key={x.id}>
-                <Tooltip title="Show Furigana (beta)">
+                <Tooltip title={intl.get("show_furigana")}>
                   <ListItemButton key={"lbtn1_" + x.id} onClick={() => doFuriganaConvertion(x.id)}>
                     <ListItemIcon key={"lico_" + x.id}>
                       <VisibilityIcon />
@@ -353,7 +353,7 @@ const SideBarItems = ((prop, ref) => {
   return (
     <React.Fragment>
       <Button variant="contained" component="label" onChange={handleSrtFileLoad}>
-        Load .srt File
+        {intl.get('load_srt_file')}
         <input type="file" accept=".srt" hidden />
       </Button>
       <IconButton 

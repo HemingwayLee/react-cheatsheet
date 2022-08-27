@@ -14,7 +14,7 @@ import TextField from '@mui/material/TextField';
 import getVideoId from 'get-video-id';
 import LockIcon from '@mui/icons-material/Lock';
 // import { getSubtitles } from 'youtube-captions-scraper';
-
+import intl from 'react-intl-universal';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -122,24 +122,24 @@ export default function SourceDialog(props) {
       onClose={handleClose} 
       open={open}
     >
-      <DialogTitle>Select a source</DialogTitle>
+      <DialogTitle>{intl.get('load_source')}</DialogTitle>
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab icon={<UploadFileIcon />}  label="Local file" {...a11yProps(0)} />
-            <Tab icon={<YouTubeIcon />}  label="Youtube" {...a11yProps(1)} />
-            <Tab icon={<VideoCameraBackIcon />}  label="Streaming" {...a11yProps(2)} />
+            <Tab icon={<UploadFileIcon />}  label={intl.get("local_file")} {...a11yProps(0)} />
+            <Tab icon={<YouTubeIcon />}  label={intl.get("youtube")} {...a11yProps(1)} />
+            <Tab icon={<VideoCameraBackIcon />}  label={intl.get("streaming")} {...a11yProps(2)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
           <Button variant="contained" component="label" onChange={handleMp4Load}>
-            Load .mp4 File
+            {intl.get('load_mp4_file')}
             <input type="file" accept=".mp4" hidden />
           </Button>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Button variant="contained" disabled>
-            <LockIcon /> Load YouTube video
+            <LockIcon /> {intl.get("load_youtube_video")}
           </Button>
           {/* <TextField
             value={ytUrl}
@@ -161,7 +161,7 @@ export default function SourceDialog(props) {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Button variant="contained" disabled>
-            <LockIcon /> Load HSL Streaming
+            <LockIcon /> {intl.get('load_hsl_streaming')}
           </Button>
         </TabPanel>
       </Box>

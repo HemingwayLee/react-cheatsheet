@@ -2,6 +2,7 @@ import React from "react";
 import Button from '@mui/material/Button';
 import ReactPlayer from 'react-player'
 import SourceDialog from './source';
+import intl from 'react-intl-universal';
 
 export default function Mp4Player(prop) {
   // const [videoFilePath, setVideoFilePath] = React.useState('https://cdn.zoubuting.com/20210719/2pNrlteZ/1000kb/hls/index.m3u8');
@@ -19,7 +20,7 @@ export default function Mp4Player(prop) {
   return (
     <React.Fragment>
       <Button variant="contained" component="label" onClick={handleSourceOpen}>
-        Load source
+        {intl.get("load_source")}
       </Button>
 
       <SourceDialog 

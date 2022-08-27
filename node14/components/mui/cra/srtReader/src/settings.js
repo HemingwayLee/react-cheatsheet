@@ -5,10 +5,11 @@ import Button from '@mui/material/Button';
 // import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
+import intl from 'react-intl-universal';
 
 export default function SettingsDialog(props) {
   const { onClose, open } = props;
-  const [wordings, setWordings] = React.useState('調整全部字幕秒數');
+  const [wordings, setWordings] = React.useState(intl.get('adjust_all_sec'));
   const [errorTxt, setErrorTxt] = React.useState('');
   const [isSecVaild, setSecVaild] = React.useState(false);
   const [sec, setSecond] = React.useState('');
@@ -37,22 +38,21 @@ export default function SettingsDialog(props) {
     if (isNumeric(theValue)) {
       const sec = parseFloat(theValue);
       if (sec >= 0.0) {
-        setWordings(`全部字幕往後${sec}秒`)
+        setWordings(intl.get("move_forward_sec", {seconds: sec}))
       } else {
-        setWordings(`全部字幕往前${Math.abs(sec)}秒`)
+        setWordings(intl.get("move_backward_sec", {seconds: Math.abs(sec)}))
       }
-
 
       if (parseFloat(theValue) >= bound) {
         setErrorTxt('')
         setSecVaild(true)
       } else {
-        setErrorTxt(`can not small than ${bound}`)
+        setErrorTxt(intl.get('can_not_smaller_than', {seconds: bound}))
         setSecVaild(false)
       }
     } else {
-      setWordings('調整全部字幕秒數')
-      setErrorTxt('Invalid number')
+      setWordings(intl.get('adjust_all_sec'))
+      setErrorTxt(intl.get('invalid_number'))
       setSecVaild(false)
     }
   }
@@ -64,7 +64,7 @@ export default function SettingsDialog(props) {
       onClose={handleClose} 
       open={open}
     >
-      <DialogTitle>Adjust all subtitles</DialogTitle>
+      <DialogTitle>{intl.get("adjust_all_subtitles")}</DialogTitle>
       <InputLabel>{wordings}</InputLabel>
       <br/>
       <TextField
