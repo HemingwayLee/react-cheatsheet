@@ -267,10 +267,28 @@ const SideBarItems = ((prop, ref) => {
   async function ReadFile(file) {
     return await file.text()
   }
+
+  function ignoreCombiningMarks(res) {
+    var regexSymbolWithCombiningMarks = /(\P{Mark})(\p{Mark}+)/gu;
+    const stripped = res.replace(regexSymbolWithCombiningMarks, function($0, symbol, combiningMarks) {
+      // console.log(`replace... ${symbol}, ${combiningMarks}`)
+      return symbol;
+    });
+    
+    return stripped;
+  }
   
   function handleSrtData(data) {
     var result = parser.fromSrt(data);
-    // console.log(result);
+    
+    result = result.map(res => {
+      return {
+        "endTime": res.endTime,
+        "id": res.id,
+        "startTime": res.startTime,
+        "text": ignoreCombiningMarks(res.text)
+      }
+    });
   
     initMatchedArr(result);
     initLines(result);
