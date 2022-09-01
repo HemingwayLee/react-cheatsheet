@@ -7,10 +7,11 @@ import './waveform.css';
 
 export default function WaveForm(prop) {
   if (prop.videoFilePath) {
+    
     useEffect(() => {
-      if (prop.wave.current && prop.timeline.current) {
+      if (prop.waveDiv.current && prop.timelineDiv.current) {
         const wavesurfer = WaveSurfer.create({
-          container: prop.wave.current,
+          container: prop.waveDiv.current,
           interact: false,
           // waveColor: 'violet',
           // progressColor: 'blue',
@@ -22,9 +23,20 @@ export default function WaveForm(prop) {
               regions: prop.regions
             }),
             TimelinePlugin.create({
-              container: prop.timeline.current
+              container: prop.timelineDiv.current
             })
-          ]
+          ],
+          // xhr: { 
+          //   cache: 'default', 
+          //   mode: 'no-cors', 
+          //   method: 'GET', 
+          //   credentials: 'same-origin', 
+          //   redirect: 'follow', 
+          //   referrer: 'client', 
+          //   headers: [ { 
+          //     key: 'Access-Control-Allow-Origin', value: '*' 
+          //   } ]
+          // }
         });
 
         wavesurfer.load(prop.videoFilePath)
@@ -37,9 +49,9 @@ export default function WaveForm(prop) {
 
   return (
     <React.Fragment>
-      <div ref={prop.wave}>
+      <div ref={prop.waveDiv}>
       </div>
-      <div ref={prop.timeline}>
+      <div ref={prop.timelineDiv}>
       </div>
     </React.Fragment>
   );

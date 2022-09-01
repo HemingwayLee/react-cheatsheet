@@ -94,7 +94,7 @@ export default function SourceDialog(props) {
       setYtErrorTxt('')
       setYtUrlVaild(true)
     } else {
-      setYtErrorTxt('Invalid youtube url')
+      setYtErrorTxt(intl.get('invalid_youtube_url'))
       setYtUrlVaild(false)
     }
   }
@@ -138,10 +138,10 @@ export default function SourceDialog(props) {
           </Button>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Button variant="contained" disabled>
+          {/* <Button variant="contained" disabled>
             <LockIcon /> {intl.get("load_youtube_video")}
-          </Button>
-          {/* <TextField
+          </Button> */}
+          <TextField
             value={ytUrl}
             error={!isYtUrlVaild}
             required
@@ -155,9 +155,10 @@ export default function SourceDialog(props) {
             disabled={!isYtUrlVaild}
             variant="contained" 
             component="label" 
-            onClick={handleYoutubeLoad}>
-            Load YouTube video
-          </Button> */}
+            onClick={handleYoutubeLoad}
+          >
+            {intl.get("load_youtube_video")}
+          </Button>
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Button variant="contained" disabled>

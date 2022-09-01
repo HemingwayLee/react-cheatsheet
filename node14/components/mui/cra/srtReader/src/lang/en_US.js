@@ -19,5 +19,6 @@ export default {
   "invalid_number": "Invalid number",
   "can_not_smaller_than": "can not small than {seconds}",
   "adjust_all_subtitles":"Adjust all subtitles",
-  "show_furigana":"Show Furigana (beta)"
+  "show_furigana":"Show Furigana (beta)",
+  "invalid_youtube_url": "Invalid YouTube URL"
 }

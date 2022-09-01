@@ -31,9 +31,9 @@ const Drawer = styled(MuiDrawer, {})(
 const theme = createTheme();
 
 export default function Dashboard() {
-  const waveRef = React.useRef(null);
+  const waveDivRef = React.useRef(null);
   const playerRef = React.useRef(null);
-  const timelineRef = React.useRef(null);
+  const timelineDivRef = React.useRef(null);
   const sidebarRef = React.useRef(null);
   const [regions, setRegions] = React.useState([]);
   const [stateVocab, setVocabValues] = React.useState([]);
@@ -49,20 +49,20 @@ export default function Dashboard() {
   }
 
   const onPlayerPlay = () => {
-    if (waveRef && objWavesurfer) {
+    if (waveDivRef && objWavesurfer) {
       objWavesurfer.play();
     }
   }
 
   const onPlayerPause = () => {
-    if (waveRef && objWavesurfer) {
+    if (waveDivRef && objWavesurfer) {
       objWavesurfer.pause();
     }
   }
 
   const onPlayerSeek = (event) => {
     // console.log(event)
-    if (waveRef && objWavesurfer) {
+    if (waveDivRef && objWavesurfer) {
       objWavesurfer.seekTo(event / objWavesurfer.getDuration());
     }
   }
@@ -75,7 +75,7 @@ export default function Dashboard() {
 
   const onHandleRegionUpdates = (theRegions) => {
     setRegions(theRegions);
-    if (waveRef && objWavesurfer) {
+    if (waveDivRef && objWavesurfer) {
       objWavesurfer.clearRegions();
       for (var i=0; i<theRegions.length; ++i) {
         objWavesurfer.addRegion(theRegions[i])
@@ -90,7 +90,7 @@ export default function Dashboard() {
       playerRef.current.seekTo(jump2);
     }
 
-    // if (waveRef && objWavesurfer) {
+    // if (waveDivRef && objWavesurfer) {
     //   objWavesurfer.seekTo(jump2 / objWavesurfer.getDuration());
     // }
   }
@@ -200,8 +200,8 @@ export default function Dashboard() {
                   <WaveForm
                     setWavesurfer={setWavesurfer}
                     regions={regions}
-                    wave={waveRef} 
-                    timeline={timelineRef}
+                    waveDiv={waveDivRef} 
+                    timelineDiv={timelineDivRef}
                     videoFilePath={videoFilePath}
                     waveDrawnReady={onWaveDrawnReady}
                   />
