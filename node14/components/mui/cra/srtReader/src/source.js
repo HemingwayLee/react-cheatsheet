@@ -67,8 +67,9 @@ export default function SourceDialog(props) {
     const url = URL.createObjectURL(selectedFile)
 
     props.setVideoHeight('100%')
-    props.setVideoControls(false)
+    props.setVideoControls(false);
     props.setVideoFilePath(url);
+    props.setAudioFilePath(url);
 
     if (props.objWavesurfer) {
       props.objWavesurfer.load(url)
@@ -110,8 +111,16 @@ export default function SourceDialog(props) {
     //   console.log(captions);
     // });
 
-    props.setVideoHeight('640px')
+    props.setVideoHeight('640px');
+    props.setVideoControls(true);
     props.setVideoFilePath(ytUrl);
+    props.setAudioFilePath(null);
+
+    if (props.objWavesurfer) {
+      props.objWavesurfer.empty()
+      props.waveDiv.current.innerHTML = ''
+    }
+
     onClose();
   }
 

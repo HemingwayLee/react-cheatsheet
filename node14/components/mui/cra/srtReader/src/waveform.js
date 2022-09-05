@@ -6,7 +6,7 @@ import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js'
 import './waveform.css';
 
 export default function WaveForm(prop) {
-  if (prop.videoFilePath) {
+  if (prop.audioFilePath) {
     
     useEffect(() => {
       if (prop.waveDiv.current && prop.timelineDiv.current) {
@@ -39,7 +39,7 @@ export default function WaveForm(prop) {
           // }
         });
 
-        wavesurfer.load(prop.videoFilePath)
+        wavesurfer.load(prop.audioFilePath)
         wavesurfer.setMute(true);
         wavesurfer.on('ready', prop.waveDrawnReady);
         prop.setWavesurfer(wavesurfer)

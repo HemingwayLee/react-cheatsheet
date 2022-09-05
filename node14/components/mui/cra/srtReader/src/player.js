@@ -26,9 +26,11 @@ export default function Mp4Player(prop) {
       <SourceDialog 
         onClose={handleClose}
         setVideoFilePath={prop.setVideoFilePath} 
+        setAudioFilePath={prop.setAudioFilePath}
         setVideoControls={prop.setVideoControls}
         setVideoHeight={setVideoHeight}
         objWavesurfer={prop.objWavesurfer}
+        waveDiv={prop.waveDiv}
         open={open}
       />
 

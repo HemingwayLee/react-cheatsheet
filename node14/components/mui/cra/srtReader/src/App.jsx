@@ -39,6 +39,7 @@ export default function Dashboard() {
   const [stateVocab, setVocabValues] = React.useState([]);
   const [stateMatchedVocab, setMatchedVocabValues] = React.useState([]);
   const [videoFilePath, setVideoFilePath] = React.useState(null);
+  const [audioFilePath, setAudioFilePath] = React.useState(null);
   const [videoControls, setVideoControls] = React.useState(false);
   const [objWavesurfer, setWavesurfer] = React.useState(null);
 
@@ -49,20 +50,20 @@ export default function Dashboard() {
   }
 
   const onPlayerPlay = () => {
-    if (waveDivRef && objWavesurfer) {
+    if (audioFilePath && objWavesurfer) {
       objWavesurfer.play();
     }
   }
 
   const onPlayerPause = () => {
-    if (waveDivRef && objWavesurfer) {
+    if (audioFilePath && objWavesurfer) {
       objWavesurfer.pause();
     }
   }
 
   const onPlayerSeek = (event) => {
     // console.log(event)
-    if (waveDivRef && objWavesurfer) {
+    if (audioFilePath && objWavesurfer) {
       objWavesurfer.seekTo(event / objWavesurfer.getDuration());
     }
   }
@@ -75,7 +76,7 @@ export default function Dashboard() {
 
   const onHandleRegionUpdates = (theRegions) => {
     setRegions(theRegions);
-    if (waveDivRef && objWavesurfer) {
+    if (audioFilePath && objWavesurfer) {
       objWavesurfer.clearRegions();
       for (var i=0; i<theRegions.length; ++i) {
         objWavesurfer.addRegion(theRegions[i])
@@ -185,7 +186,9 @@ export default function Dashboard() {
                   <Mp4Player 
                     videoFilePath={videoFilePath}
                     videoControls={videoControls}
+                    waveDiv={waveDivRef}
                     setVideoFilePath={setVideoFilePath}
+                    setAudioFilePath={setAudioFilePath}
                     setVideoControls={setVideoControls}
                     player={playerRef}
                     objWavesurfer={objWavesurfer}
@@ -202,7 +205,7 @@ export default function Dashboard() {
                     regions={regions}
                     waveDiv={waveDivRef} 
                     timelineDiv={timelineDivRef}
-                    videoFilePath={videoFilePath}
+                    audioFilePath={audioFilePath}
                     waveDrawnReady={onWaveDrawnReady}
                   />
                 </Paper>
