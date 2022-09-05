@@ -72,6 +72,11 @@ export default function SourceDialog(props) {
     props.setAudioFilePath(url);
 
     if (props.objWavesurfer) {
+      
+      if (props.waveDiv.current.children.length > 0 &&
+        props.waveDiv.current.children[0].tagName.toUpperCase() === "H3") {
+        props.waveDiv.current.removeChild(props.waveDiv.current.children[0])
+      }
       props.objWavesurfer.load(url)
     }
 
@@ -118,7 +123,7 @@ export default function SourceDialog(props) {
 
     if (props.objWavesurfer) {
       props.objWavesurfer.empty()
-      props.waveDiv.current.innerHTML = ''
+      props.waveDiv.current.innerHTML = '<h3 style="text-align: center;">waveform can not be shown</h3>'
     }
 
     onClose();
@@ -147,9 +152,6 @@ export default function SourceDialog(props) {
           </Button>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {/* <Button variant="contained" disabled>
-            <LockIcon /> {intl.get("load_youtube_video")}
-          </Button> */}
           <TextField
             value={ytUrl}
             error={!isYtUrlVaild}
@@ -158,6 +160,7 @@ export default function SourceDialog(props) {
             id="outlined-required"
             label="Required"
             onChange={handleYtChange}
+            fullWidth
           />
           <br />
           <Button 
