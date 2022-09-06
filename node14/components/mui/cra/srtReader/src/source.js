@@ -70,6 +70,7 @@ export default function SourceDialog(props) {
     props.setVideoControls(false);
     props.setVideoFilePath(url);
     props.setAudioFilePath(url);
+    props.setPlaying(false)
 
     if (props.objWavesurfer) {
       
@@ -120,6 +121,7 @@ export default function SourceDialog(props) {
     props.setVideoControls(true);
     props.setVideoFilePath(ytUrl);
     props.setAudioFilePath(null);
+    props.setPlaying(false)
 
     if (props.objWavesurfer) {
       props.objWavesurfer.empty()

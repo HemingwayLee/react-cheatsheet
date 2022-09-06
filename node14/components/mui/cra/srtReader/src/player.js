@@ -29,12 +29,14 @@ export default function Mp4Player(prop) {
         setAudioFilePath={prop.setAudioFilePath}
         setVideoControls={prop.setVideoControls}
         setVideoHeight={setVideoHeight}
+        setPlaying={prop.setPlaying}
         objWavesurfer={prop.objWavesurfer}
         waveDiv={prop.waveDiv}
         open={open}
       />
 
       <ReactPlayer
+        playing={prop.playing}
         ref={prop.player}
         url={prop.videoFilePath} 
         config={{ 

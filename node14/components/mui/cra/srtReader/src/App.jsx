@@ -35,6 +35,7 @@ export default function Dashboard() {
   const playerRef = React.useRef(null);
   const timelineDivRef = React.useRef(null);
   const sidebarRef = React.useRef(null);
+  const [playing, setPlaying] = React.useState(false);
   const [regions, setRegions] = React.useState([]);
   const [stateVocab, setVocabValues] = React.useState([]);
   const [stateMatchedVocab, setMatchedVocabValues] = React.useState([]);
@@ -89,6 +90,7 @@ export default function Dashboard() {
 
     if (playerRef) {
       playerRef.current.seekTo(jump2);
+      setPlaying(true)
     }
 
     // if (waveDivRef && objWavesurfer) {
@@ -191,6 +193,8 @@ export default function Dashboard() {
                     setAudioFilePath={setAudioFilePath}
                     setVideoControls={setVideoControls}
                     player={playerRef}
+                    playing={playing}
+                    setPlaying={setPlaying}
                     objWavesurfer={objWavesurfer}
                     onPlayerPlay={onPlayerPlay}
                     onPlayerPause={onPlayerPause}
