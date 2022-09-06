@@ -20,5 +20,6 @@ export default {
   "can_not_smaller_than": "不能小於{seconds}",
   "adjust_all_subtitles":"調整全部字幕",
   "show_furigana":"顯示振假名(beta)",
-  "invalid_youtube_url": "無效的YouTube網址"
+  "invalid_youtube_url": "無效的YouTube網址",
+  "waveform_cannot_be_shown": "YouTube音波無法顯示"
 }

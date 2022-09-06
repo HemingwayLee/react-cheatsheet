@@ -123,7 +123,7 @@ export default function SourceDialog(props) {
 
     if (props.objWavesurfer) {
       props.objWavesurfer.empty()
-      props.waveDiv.current.innerHTML = '<h3 style="text-align: center;">waveform can not be shown</h3>'
+      props.waveDiv.current.innerHTML = `<h3 style="text-align: center;">${intl.get('waveform_cannot_be_shown')}</h3>`
     }
 
     onClose();
