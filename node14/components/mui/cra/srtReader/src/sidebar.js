@@ -380,7 +380,7 @@ const SideBarItems = ((prop, ref) => {
       >
         <SettingsIcon />
       </IconButton>
-      <IconButton onClick={handleProfileOpen}>
+      <IconButton onClick={handleProfileOpen} disabled>
         <SmileIcon/>
       </IconButton>
       <IconButton disabled>
@@ -405,10 +405,10 @@ const SideBarItems = ((prop, ref) => {
           </MenuItem>
         ))}
       </Menu>
-      <ProfileDialog 
+      {/* <ProfileDialog 
         onClose={handleProfileClose} 
         open={profileOpen}
-      />
+      /> */}
       <SettingsDialog 
         lowerBound={lowerBound}
         shiftStartTime={handleShiftTime}
