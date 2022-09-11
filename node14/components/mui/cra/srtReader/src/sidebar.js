@@ -28,6 +28,7 @@ import parse from 'html-react-parser';
 import intl from 'react-intl-universal';
 import en_US from './lang/en_US.js';
 import zh_TW from './lang/zh_TW.js';
+import './sidebar.css';
 
 const kuroshiro = new Kuroshiro();
 
@@ -107,8 +108,6 @@ const SideBarItems = ((prop, ref) => {
   }
 
   function doStyling(token) {
-    console.log(token)
-
     const t = token.surface_form;
 
     if (token.pos === "記号" || 
@@ -120,11 +119,10 @@ const SideBarItems = ((prop, ref) => {
     const url = `https://jisho.org/search/${t}`;
     const mystyle = {
       backgroundColor: getColor(t),
-      color: 'black',
       textDecoration: 'none'
     };
 
-    return (<a href={url} style={mystyle} target='_blank'>{t}</a>)
+    return (<a href={url} class="token" style={mystyle} target='_blank'>{t}</a>)
   }
 
   function getPercentage(matchedVocabs) {
