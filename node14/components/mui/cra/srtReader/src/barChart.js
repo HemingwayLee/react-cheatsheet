@@ -11,7 +11,7 @@ export default function MatchedChart(prop) {
           data={prop.data}
           layout="vertical" 
           barCategoryGap={1}
-          margin={{right: 30}}
+          margin={{right: 45}}
         >
           <XAxis type="number" />
           <YAxis type="category" dataKey="name"/>  
@@ -22,7 +22,7 @@ export default function MatchedChart(prop) {
             // adding label will be very slow, no idea why
             // label={<Label />}
           >   
-            <LabelList dataKey="count" position="right"></LabelList>
+            <LabelList dataKey="percentage" position="right"></LabelList>
             {
               prop.data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />

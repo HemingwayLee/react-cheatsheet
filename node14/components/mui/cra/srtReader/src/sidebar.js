@@ -114,16 +114,29 @@ const SideBarItems = ((prop, ref) => {
     return (<span style={mystyle}> {t} </span>)
   }
 
+  function getPercentage(matchedVocabs) {
+    const sum = matchedVocabs.reduce((partialSum, x) => partialSum + x.count, 0);
+    return matchedVocabs.map(x => { 
+      return {
+        "name": x.name,
+        "count": x.count,
+        "color": x.color,
+        "percentage": `${Math.round((x.count / sum) * 1000) / 10}%`
+      }
+    })
+  }
+
   function doRedrawWithNewVocabFile() {
     let tmpMatchedVocab = doInitMatchedArr();
 
     let tmp = [...stateItems];
     for (var i=0; i<tmp.length; ++i) {
       tmp[i].tokens = tokenizer.tokenize(tmp[i].text).map(t => doStyling(t.surface_form))
-      tokenizer.tokenize(tmp[i].text).map(x => doMatching(tmpMatchedVocab, x.surface_form))
+      tokenizer.tokenize(tmp[i].text).map(x => doMatching(tmpMatchedVocab, x))
     }
     setItemValues(tmp);
-    prop.handleMatched(tmpMatchedVocab);
+
+    prop.handleMatched(getPercentage(tmpMatchedVocab));
   }
 
   function doFuriganaConvertion (id) {
@@ -155,7 +168,16 @@ const SideBarItems = ((prop, ref) => {
     })();
   }
 
-  function doMatching(tmpMatchedVocab, x) {
+  function doMatching(tmpMatchedVocab, token) {
+    if (token.pos === "記号") {
+      return;
+    }
+
+    if (token.pos_detail_2 === "人名") {
+      return;
+    }
+    
+    const x = token.surface_form;
     for (var i=0; i<prop.vocab.length; ++i) {
       if (prop.vocab[i].arr.includes(x)) {
         tmpMatchedVocab[i].count += 1;
@@ -188,10 +210,10 @@ const SideBarItems = ((prop, ref) => {
     let tmpMatchedVocab = doInitMatchedArr();
 
     result.map(x => {
-      tokenizer.tokenize(x.text).map(x => doMatching(tmpMatchedVocab, x.surface_form))
+      tokenizer.tokenize(x.text).map(x => doMatching(tmpMatchedVocab, x))
     });
 
-    prop.handleMatched(tmpMatchedVocab);
+    prop.handleMatched(getPercentage(tmpMatchedVocab));
   }
 
   function setRegions(arr) {
@@ -235,7 +257,7 @@ const SideBarItems = ((prop, ref) => {
         Array.isArray(items)
           ? items.map((x, idx) => {
             return (
-              <ListItem key={x.id} >
+              <ListItem key={x.id} style={{border: '1px solid #1976d2', marginTop: '2px'}}>
                 <table>
                   <tbody>
                     <tr>
