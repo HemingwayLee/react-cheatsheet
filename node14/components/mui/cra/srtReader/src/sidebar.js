@@ -106,12 +106,25 @@ const SideBarItems = ((prop, ref) => {
     return "#ffffff00";
   }
 
-  function doStyling(t) {
+  function doStyling(token) {
+    console.log(token)
+
+    const t = token.surface_form;
+
+    if (token.pos === "記号" || 
+      token.pos_detail_2 === "人名" ||
+      token.pos_detail_1 === "数") {
+      return (<span>{t}</span>);
+    }
+
+    const url = `https://jisho.org/search/${t}`;
     const mystyle = {
-      backgroundColor: getColor(t)
+      backgroundColor: getColor(t),
+      color: 'black',
+      textDecoration: 'none'
     };
 
-    return (<span style={mystyle}> {t} </span>)
+    return (<a href={url} style={mystyle} target='_blank'>{t}</a>)
   }
 
   function getPercentage(matchedVocabs) {
@@ -131,7 +144,7 @@ const SideBarItems = ((prop, ref) => {
 
     let tmp = [...stateItems];
     for (var i=0; i<tmp.length; ++i) {
-      tmp[i].tokens = tokenizer.tokenize(tmp[i].text).map(t => doStyling(t.surface_form))
+      tmp[i].tokens = tokenizer.tokenize(tmp[i].text).map(t => doStyling(t))
       tokenizer.tokenize(tmp[i].text).map(x => doMatching(tmpMatchedVocab, x))
     }
     setItemValues(tmp);
@@ -169,11 +182,9 @@ const SideBarItems = ((prop, ref) => {
   }
 
   function doMatching(tmpMatchedVocab, token) {
-    if (token.pos === "記号") {
-      return;
-    }
-
-    if (token.pos_detail_2 === "人名") {
+    if (token.pos === "記号" ||
+      token.pos_detail_2 === "人名" ||
+      token.pos_detail_1 === "数") {
       return;
     }
     
@@ -244,7 +255,7 @@ const SideBarItems = ((prop, ref) => {
     const tmp = result.map(x => {
       return {
         ...x,
-        "tokens": tokenizer.tokenize(x.text).map(t => doStyling(t.surface_form))
+        "tokens": tokenizer.tokenize(x.text).map(t => doStyling(t))
       }
     });
     setItemValues(tmp);
@@ -258,11 +269,17 @@ const SideBarItems = ((prop, ref) => {
           ? items.map((x, idx) => {
             return (
               <ListItem key={x.id} style={{border: '1px solid #1976d2', marginTop: '2px'}}>
+                <ListItemText 
+                  key={"ltxt_" + x.id} 
+                  primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
+                  primary={ x.tokens }
+                  secondary={ x.startTime + " -> " + x.endTime } 
+                />
                 <table>
                   <tbody>
                     <tr>
                       <td>
-                        <Tooltip title={intl.get("show_furigana")}>
+                        <Tooltip title={intl.get("show_furigana")} arrow placement="right">
                           <ListItemButton style={{minWidth: '30px'}} key={"lbtn1_" + x.id} onClick={() => doFuriganaConvertion(x.id)}>
                             <ListItemIcon style={{minWidth: '30px'}}  key={"lico_" + x.id}>
                               <VisibilityIcon />
@@ -273,7 +290,7 @@ const SideBarItems = ((prop, ref) => {
                     </tr>
                     <tr>
                       <td>
-                        <Tooltip title={intl.get("play_this_sentence")}>
+                        <Tooltip title={intl.get("play_this_sentence")} arrow placement="right">
                           <ListItemButton style={{minWidth: '30px'}} key={"lbtn2_" + x.id} onClick={() => {
                             // handleItemSelected(idx)
                             prop.handleJump(x.startTime)
@@ -287,12 +304,6 @@ const SideBarItems = ((prop, ref) => {
                     </tr>
                   </tbody>
                 </table>
-                <ListItemText 
-                  key={"ltxt_" + x.id} 
-                  primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
-                  primary={ x.tokens }
-                  secondary={ x.startTime + " -> " + x.endTime } 
-                />
               </ListItem>
             );
           }) : null

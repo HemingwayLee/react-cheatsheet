@@ -14,7 +14,7 @@ import VocabChart from './cardChart';
 import WaveForm from './waveform';
 import intl from 'react-intl-universal';
 
-const cbColors = ["#d55e0099", "#0072b299", "#cc79a799",  "#f0e44299", "#009e7399"];
+const cbColors = ["#d55e0077", "#0072b277", "#cc79a777",  "#f0e44277", "#009e7377"];
 // const cbColors = ["#d55e0099", "#0072b299"];
 
 const Drawer = styled(MuiDrawer, {})(
