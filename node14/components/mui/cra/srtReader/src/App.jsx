@@ -38,7 +38,7 @@ export default function Dashboard() {
   const [playing, setPlaying] = React.useState(false);
   const [regions, setRegions] = React.useState([]);
   const [stateVocab, setVocabValues] = React.useState([]);
-  const [stateMatchedVocab, setMatchedVocabValues] = React.useState([]);
+  const [matchedVocab, setMatchedVocabValues] = React.useState([]);
   const [videoFilePath, setVideoFilePath] = React.useState(null);
   const [audioFilePath, setAudioFilePath] = React.useState(null);
   const [videoControls, setVideoControls] = React.useState(false);
@@ -168,7 +168,7 @@ export default function Dashboard() {
                     height: 240,
                   }}
                 >
-                  <MatchedChart data={stateMatchedVocab} />
+                  <MatchedChart data={matchedVocab} />
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>

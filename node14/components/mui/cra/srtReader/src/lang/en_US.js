@@ -21,5 +21,6 @@ export default {
   "adjust_all_subtitles":"Adjust all subtitles",
   "show_furigana":"Show Furigana (beta)",
   "invalid_youtube_url": "Invalid YouTube URL",
-  "waveform_cannot_be_shown": "YouTube audio waveform cannot be shown"
+  "waveform_cannot_be_shown": "YouTube audio waveform cannot be shown",
+  "play_this_sentence": "Play this sentence"
 }

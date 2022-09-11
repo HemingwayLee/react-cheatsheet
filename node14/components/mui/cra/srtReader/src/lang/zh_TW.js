@@ -21,5 +21,6 @@ export default {
   "adjust_all_subtitles":"調整全部字幕",
   "show_furigana":"顯示振假名(beta)",
   "invalid_youtube_url": "無效的YouTube網址",
-  "waveform_cannot_be_shown": "YouTube音波無法顯示"
+  "waveform_cannot_be_shown": "YouTube音波無法顯示",
+  "play_this_sentence": "播放此句"
 }

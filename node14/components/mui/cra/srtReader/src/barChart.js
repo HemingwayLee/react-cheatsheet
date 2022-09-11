@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Cell, Tooltip, Label, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Cell, Tooltip, LabelList, Label, ResponsiveContainer } from 'recharts';
 import intl from 'react-intl-universal';
   
 export default function MatchedChart(prop) {
@@ -7,8 +7,12 @@ export default function MatchedChart(prop) {
     <React.Fragment>
       <h2>{intl.get("matched_vocabulary")}</h2>
       <ResponsiveContainer>
-        <BarChart data={prop.data}
-          layout="vertical" barCategoryGap={1}>
+        <BarChart 
+          data={prop.data}
+          layout="vertical" 
+          barCategoryGap={1}
+          margin={{right: 30}}
+        >
           <XAxis type="number" />
           <YAxis type="category" dataKey="name"/>  
           <Tooltip/>
@@ -18,6 +22,7 @@ export default function MatchedChart(prop) {
             // adding label will be very slow, no idea why
             // label={<Label />}
           >   
+            <LabelList dataKey="count" position="right"></LabelList>
             {
               prop.data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />

@@ -8,6 +8,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SmileIcon from "@mui/icons-material/Mood";
 import Coffee from '@mui/icons-material/Coffee';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from "@mui/icons-material/Settings";
 import Tooltip from '@mui/material/Tooltip';
@@ -234,29 +235,42 @@ const SideBarItems = ((prop, ref) => {
         Array.isArray(items)
           ? items.map((x, idx) => {
             return (
-              <ListItem key={x.id}>
-                <Tooltip title={intl.get("show_furigana")}>
-                  <ListItemButton key={"lbtn1_" + x.id} onClick={() => doFuriganaConvertion(x.id)}>
-                    <ListItemIcon key={"lico_" + x.id}>
-                      <VisibilityIcon />
-                    </ListItemIcon>
-                  </ListItemButton>
-                </Tooltip>
-                <ListItemButton 
-                  // selected={selectedIndex === idx} 
-                  key={"lbtn2_" + x.id} 
-                  onClick={() => {
-                    // handleItemSelected(idx)
-                    prop.handleJump(x.startTime)
-                  }}
-                >
-                  <ListItemText 
-                    key={"ltxt_" + x.id} 
-                    primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
-                    primary={ x.tokens }
-                    secondary={ x.startTime + " -> " + x.endTime } 
-                  />
-                </ListItemButton>
+              <ListItem key={x.id} >
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <Tooltip title={intl.get("show_furigana")}>
+                          <ListItemButton style={{minWidth: '30px'}} key={"lbtn1_" + x.id} onClick={() => doFuriganaConvertion(x.id)}>
+                            <ListItemIcon style={{minWidth: '30px'}}  key={"lico_" + x.id}>
+                              <VisibilityIcon />
+                            </ListItemIcon>
+                          </ListItemButton>
+                        </Tooltip>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Tooltip title={intl.get("play_this_sentence")}>
+                          <ListItemButton style={{minWidth: '30px'}} key={"lbtn2_" + x.id} onClick={() => {
+                            // handleItemSelected(idx)
+                            prop.handleJump(x.startTime)
+                          }}>
+                            <ListItemIcon style={{minWidth: '30px'}}  key={"lico2_" + x.id}>
+                              <PlayCircleIcon />
+                            </ListItemIcon>
+                          </ListItemButton>
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <ListItemText 
+                  key={"ltxt_" + x.id} 
+                  primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
+                  primary={ x.tokens }
+                  secondary={ x.startTime + " -> " + x.endTime } 
+                />
               </ListItem>
             );
           }) : null
