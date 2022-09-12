@@ -13,6 +13,8 @@ import Mp4Player from './player';
 import VocabChart from './cardChart';
 import WaveForm from './waveform';
 import intl from 'react-intl-universal';
+import { n4 } from './vocabs/n4';
+import { n5 } from './vocabs/n5';
 
 const cbColors = ["#d55e0077", "#0072b277", "#cc79a777",  "#f0e44277", "#009e7377"];
 // const cbColors = ["#d55e0099", "#0072b299"];
@@ -37,7 +39,20 @@ export default function Dashboard() {
   const sidebarRef = React.useRef(null);
   const [playing, setPlaying] = React.useState(false);
   const [regions, setRegions] = React.useState([]);
-  const [stateVocab, setVocabValues] = React.useState([]);
+  
+  const [stateVocab, setVocabValues] = React.useState([{
+      "name": 'n5',
+      "arr": n5,
+      "count": n5.length,
+      "color": cbColors[0]
+    },{
+      "name": 'n4',
+      "arr": n4,
+      "count": n4.length,
+      "color": cbColors[1]
+    }
+  ]);
+
   const [matchedVocab, setMatchedVocabValues] = React.useState([]);
   const [videoFilePath, setVideoFilePath] = React.useState(null);
   const [audioFilePath, setAudioFilePath] = React.useState(null);
@@ -114,7 +129,7 @@ export default function Dashboard() {
     }
 
     let tmp = [...stateVocab];
-    const arr = fileContent.split("\r\n");
+    const arr = fileContent.split("\n");
     tmp.push({
       "name": filename,
       "arr": arr,
