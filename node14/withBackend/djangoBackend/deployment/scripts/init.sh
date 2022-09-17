@@ -28,6 +28,7 @@ else
 fi
 
 
-cd /home/app/
-concurrently "nginx" "cd /home/app/backend && python3 manage.py runserver 0.0.0.0:8000"
+nginx 
+cd /home/app/backend 
+python3 manage.py runserver 0.0.0.0:8000
 

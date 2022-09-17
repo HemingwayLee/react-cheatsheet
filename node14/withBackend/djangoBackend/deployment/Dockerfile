@@ -8,7 +8,7 @@ RUN apt-get install -y nodejs
 RUN mkdir -p /home/app/
 COPY . /home/app/
 
-RUN npm install -g concurrently
+# RUN npm install -g concurrently
 
 WORKDIR /home/app/frontend/
 RUN npm install .

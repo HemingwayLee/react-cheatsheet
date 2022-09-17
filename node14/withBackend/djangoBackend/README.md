@@ -1,1 +1,3 @@
-# deployment is NOT finished
+# TODO:
+* login
+* cra
