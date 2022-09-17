@@ -1,9 +1,39 @@
 import React from 'react';
-import { Tab } from 'semantic-ui-react'
+import { Tab, Button } from 'semantic-ui-react'
 
 class Welcome extends React.Component {
+  doInsert() {
+    fetch('/api/insert/', {
+      method: 'GET',
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      alert(myJson["result"]);
+    });
+  }
+
+  showPerson() {
+    fetch('/api/show1/', {
+      method: 'GET',
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      alert(myJson["result"]);
+    });
+  }
+
   handleTab1() {
-    return <Tab.Pane>Tab 1 Content From a function</Tab.Pane>
+    return (
+      <div>
+        <Tab.Pane>Tab 1 Content From a function</Tab.Pane>
+        <Button secondary onClick={this.doInsert}>Call backend to do insertion</Button>
+        <Button secondary onClick={this.showPerson}>Call backend to show</Button>
+      </div>
+    )
   }
 
   render() {
