@@ -1,5 +1,5 @@
-upstream my-express {
-  server 127.0.0.1:3000;
+upstream my-django {
+  server 127.0.0.1:8000;
 }
 
 server {
@@ -13,6 +13,6 @@ server {
   server_name _;
 
   location /api/ {
-    proxy_pass  http://my-express;
+    proxy_pass  http://my-django;
   }
 }
