@@ -1,26 +1,46 @@
 {
-  "name": "manualhelloworldwebpack",
+  "name": "django-react-cra",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-cli serve --mode development"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "author": "ywlee",
   "license": "ISC",
+  "proxy": {
+    "/api": {
+      "target" : "http://0.0.0.0:8000",
+      "changeOrigin" : true
+    }
+  },
   "dependencies": {
-    "@babel/core": "^7.14.0",
-    "@babel/preset-env": "^7.14.1",
-    "@babel/preset-react": "^7.13.13",
-    "babel-loader": "^8.2.2",
-    "html-webpack-plugin": "^5.3.1",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/lab": "^5.0.0-alpha.90",
+    "@mui/material": "^5.8.2",
+    "moment": "^2.29.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^2.1.2",
-    "webpack": "^5.37.0",
-    "webpack-cli": "^4.7.0",
-    "webpack-dev-server": "^3.11.2"
+    "react-intl-universal": "^2.5.3",
+    "react-player": "^2.10.1",
+    "react-scripts": "^4.0.3",
+    "recharts": "^2.1.12",
+    "srt-parser-2": "^1.1.7",
+    "wavesurfer.js": "^6.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

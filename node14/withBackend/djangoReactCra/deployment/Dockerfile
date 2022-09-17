@@ -8,12 +8,10 @@ RUN apt-get install -y nodejs
 RUN mkdir -p /home/app/
 COPY . /home/app/
 
-# RUN npm install -g concurrently
-
 WORKDIR /home/app/frontend/
 RUN npm install .
 RUN npm run build
-RUN cp /home/app/frontend/dist/* /var/www/html
+RUN cp -R /home/app/frontend/build/* /var/www/html
 RUN cp /home/app/nginx/default /etc/nginx/sites-enabled/default 
 
 WORKDIR /home/app/backend/

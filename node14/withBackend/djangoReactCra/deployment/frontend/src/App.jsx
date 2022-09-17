@@ -1,8 +1,37 @@
+import Button from '@mui/material/Button';
 import React from 'react';
-import { Tab, Button } from 'semantic-ui-react'
+import moment from 'moment';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import MuiDrawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import intl from 'react-intl-universal';
 
-class Welcome extends React.Component {
-  doInsert() {
+const Drawer = styled(MuiDrawer, {})(
+  ({}) => ({
+    '& .MuiDrawer-paper': {
+      position: 'relative',
+      whiteSpace: 'nowrap',
+      width: 360,
+      boxSizing: 'border-box'
+    },
+  }),
+);
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: "#000000" /*or whatever color you desire */
+    }
+  },
+});
+
+export default function Dashboard() {
+  const doInsert = () => {
     fetch('/api/insert/', {
       method: 'GET',
     })
@@ -13,8 +42,8 @@ class Welcome extends React.Component {
       alert(myJson["result"]);
     });
   }
-
-  showPerson() {
+  
+  const showPerson = () => {
     fetch('/api/show1/', {
       method: 'GET',
     })
@@ -25,34 +54,43 @@ class Welcome extends React.Component {
       alert(myJson["result"]);
     });
   }
-
-  handleTab1() {
-    return (
-      <div>
-        <Tab.Pane>Tab 1 Content From a function</Tab.Pane>
-        <Button secondary onClick={this.doInsert}>Call backend to do insertion</Button>
-        <Button secondary onClick={this.showPerson}>Call backend to show</Button>
-      </div>
-    )
-  }
-
-  render() {
-    const panes = [
-      {
-        menuItem: 'Tab 1', render: () => {
-          return this.handleTab1();
-        }
-      },
-      { menuItem: 'Tab 2', render: () => <Tab.Pane>Tab 2 Content</Tab.Pane> },
-      { menuItem: 'Tab 3', render: () => <Tab.Pane>Tab 3 Content</Tab.Pane> },
-    ];
-
-    return <div>
-        <h1>Hello, {this.props.name}</h1>
-        <hr />
-        <Tab panes={panes} />
-      </div>;
-  }
+  
+  return (
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: 'flex' }}>
+        <Drawer variant="permanent">
+          <List component="nav">
+            <Button variant="contained" component="label"  onClick={doInsert}>Insert Data</Button>
+          </List>
+        </Drawer>
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === 'light'
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+          }}
+        >
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <Button variant="contained" component="label" onClick={showPerson}>Show Person</Button>
+                </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <Button variant="contained" component="label" onClick={()=>{alert("!!!!")}}>Alert</Button>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Container>
+        </Box>
+      </Box>
+    </ThemeProvider>
+  );
 }
-
-export default Welcome;
