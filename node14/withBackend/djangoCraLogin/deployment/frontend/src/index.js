@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Dashboard from './App.jsx';
+import MainPage from './App.jsx';
 
 ReactDOM.render(
-  <Dashboard />,
+  <MainPage />,
   document.getElementById('root')
 );
+

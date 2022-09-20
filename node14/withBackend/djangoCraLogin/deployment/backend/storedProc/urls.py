@@ -21,4 +21,6 @@ urlpatterns = [
     path('api/show1/', views.show1),
     path('api/show2/', views.show2),
     path('api/insert/', views.insert),
+    path('api/dosignin/', views.dosignin),
+    path('api/signout/', views.signout),
 ]

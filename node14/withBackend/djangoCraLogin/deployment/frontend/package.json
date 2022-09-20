@@ -9,27 +9,21 @@
   },
   "author": "ywlee",
   "license": "ISC",
-  "proxy": {
-    "/api": {
-      "target" : "http://0.0.0.0:8000",
-      "changeOrigin" : true
-    }
-  },
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.90",
     "@mui/material": "^5.8.2",
-    "moment": "^2.29.4",
+    "http-proxy-middleware": "^2.0.6",
+    "js-cookie": "^3.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-intl-universal": "^2.5.3",
-    "react-player": "^2.10.1",
+    "react-router-dom": "^6.4.0",
     "react-scripts": "^4.0.3",
     "recharts": "^2.1.12",
-    "srt-parser-2": "^1.1.7",
-    "wavesurfer.js": "^6.2.0"
+    "srt-parser-2": "^1.1.7"
   },
   "browserslist": {
     "production": [
