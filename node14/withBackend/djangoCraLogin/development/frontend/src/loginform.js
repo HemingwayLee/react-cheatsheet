@@ -30,6 +30,7 @@ export default function SignIn(prop) {
     .then(function(response) {
       if (response.status === 200) {
         // console.log(Cookies.get('csrftoken'))
+        prop.setLogin(true)
         navigate('/')
       } else {
         alert("backend errors")
