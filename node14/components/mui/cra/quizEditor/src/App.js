@@ -23,6 +23,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import ReactPlayer from 'react-player'
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -41,7 +42,7 @@ export default function RecipeReviewCard() {
   const [allCards, setAllCards] = React.useState([{
       "title": "This is first question",
       "subheader": "grammar",
-      "image": "/static/img/AVerTV.jpg",
+      "image": "https://youtu.be/JI74HURlaBM",
       "component": "img",
       "question": "This is the 1st question",
       "selection": {
@@ -56,7 +57,7 @@ export default function RecipeReviewCard() {
     }, {
       "title": "This is 2nd question",
       "subheader": "vocabulary",
-      "image": "/static/img/tv_tuner_card.jpeg",
+      "image": "https://youtu.be/JI74HURlaBM",
       "component": "img",
       "question": "This is the 2nd question",
       "selection": {
@@ -71,7 +72,7 @@ export default function RecipeReviewCard() {
     }, {
       "title": "This is 3rd question",
       "subheader": "grammar",
-      "image": "/static/img/tv_tuner_usb.jpg",
+      "image": "https://youtu.be/JI74HURlaBM",
       "component": "img",
       "question": "This is the 3rd question",
       "selection": {
@@ -163,9 +164,25 @@ export default function RecipeReviewCard() {
             title={allCards[idx].title}
             subheader={allCards[idx].subheader}
           />
-          <CardMedia
+          {/* <CardMedia
             component={allCards[idx].component}
             image={allCards[idx].image}
+          /> */}
+          <ReactPlayer
+            // playing={prop.playing}
+            // ref={prop.player}
+            url={allCards[idx].image} 
+            config={{ 
+              youtube: { 
+                playerVars: { origin: 'https://www.youtube.com' } 
+              } 
+            }}
+            width={"100%"}
+            // height={videoHeight} 
+            // controls={prop.videoControls} 
+            // onPlay={prop.onPlayerPlay}
+            // onPause={prop.onPlayerPause}
+            // onSeek={prop.onPlayerSeek}
           />
           <CardContent>
             <div>
