@@ -24,6 +24,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import ReactPlayer from 'react-player'
+import ReactHtmlParser from 'react-html-parser'
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -37,13 +39,14 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function RecipeReviewCard() {
+  const playerRef = React.useRef(null);
+
   const [expanded, setExpanded] = React.useState(false);
   const [idx, setIndex] = React.useState(0);
   const [allCards, setAllCards] = React.useState([{
       "title": "This is first question",
       "subheader": "grammar",
-      "image": "https://youtu.be/JI74HURlaBM",
-      "component": "img",
+      "url": "https://youtu.be/eZDA1QTnRVI",
       "question": "This is the 1st question",
       "selection": {
         "label": "What is your answers?",
@@ -57,8 +60,7 @@ export default function RecipeReviewCard() {
     }, {
       "title": "This is 2nd question",
       "subheader": "vocabulary",
-      "image": "https://youtu.be/JI74HURlaBM",
-      "component": "img",
+      "url": "https://youtu.be/U2SDrRsWx7Y",
       "question": "This is the 2nd question",
       "selection": {
         "label": "What is your answers?",
@@ -72,14 +74,13 @@ export default function RecipeReviewCard() {
     }, {
       "title": "This is 3rd question",
       "subheader": "grammar",
-      "image": "https://youtu.be/JI74HURlaBM",
-      "component": "img",
+      "url": "https://youtu.be/JI74HURlaBM",
       "question": "This is the 3rd question",
       "selection": {
         "label": "What is your answers?",
         "answer": "",
         "selections":[
-          {"label": "GGG"},
+          {"label": `<span style="background: red">GGG</span>`},
           {"label": "HHH"},
           {"label": "III"}
         ]
@@ -87,8 +88,7 @@ export default function RecipeReviewCard() {
     }, {
       "title": "This is 4th question",
       "subheader": "youtube video",
-      "image": "https://youtu.be/o_q1e6LpX2c",
-      "component": "video",
+      "url": "https://youtu.be/o_q1e6LpX2c",
       "question": "TODO: fix cross-origin problem, This is the 4th question",
       "selection": {
         "label": "What is your answers?",
@@ -170,16 +170,16 @@ export default function RecipeReviewCard() {
           /> */}
           <ReactPlayer
             // playing={prop.playing}
-            // ref={prop.player}
-            url={allCards[idx].image} 
+            ref={playerRef}
+            url={allCards[idx].url} 
             config={{ 
               youtube: { 
                 playerVars: { origin: 'https://www.youtube.com' } 
               } 
             }}
             width={"100%"}
-            // height={videoHeight} 
-            // controls={prop.videoControls} 
+            height={"512px"} 
+            controls={true} 
             // onPlay={prop.onPlayerPlay}
             // onPause={prop.onPlayerPause}
             // onSeek={prop.onPlayerSeek}
@@ -198,7 +198,7 @@ export default function RecipeReviewCard() {
                 Array.isArray(allCards[idx].selection.selections) ? allCards[idx].selection.selections.map((x, i) => {
                   const theId = `quiz-${idx}-sel-${i}`
                   return (
-                    <FormControlLabel key={theId} value={theId} control={<Radio onClick={(e) => {onAnswerClick(e, idx)}}/>} label={x.label} />
+                    <FormControlLabel key={theId} value={theId} control={<Radio onClick={(e) => {onAnswerClick(e, idx)}}/>} label={ReactHtmlParser(x.label)} />
                   )
                 }) : null
               }
