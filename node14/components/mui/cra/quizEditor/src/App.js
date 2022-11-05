@@ -52,7 +52,7 @@ export default function RecipeReviewCard() {
         "label": "What is your answers?",
         "answer": "",
         "selections":[
-          {"label": "AAA"},
+          {"label": "<ruby>漢字<rt>かんじ</rt></ruby>"},
           {"label": "BBB"},
           {"label": "CCC"}
         ]

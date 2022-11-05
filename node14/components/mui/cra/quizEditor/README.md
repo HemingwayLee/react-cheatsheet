@@ -1,7 +1,4 @@
-# How 
-## TODO:
-* Add youtube player
-
+# How
 ```
 npm install react
 npm install react-dom
