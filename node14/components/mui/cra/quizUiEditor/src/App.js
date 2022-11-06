@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
@@ -24,9 +23,15 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import ReactPlayer from 'react-player'
 import ReactHtmlParser from 'react-html-parser'
+import './App.css';
 
+const levels = [
+  "N5", "N4", "N3", "N2", "N1"
+]
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -41,7 +46,7 @@ const ExpandMore = styled((props) => {
 
 export default function RecipeReviewCard() {
   const playerRef = React.useRef(null);
-
+  const [theSelectedAvatar, setAvatar] = React.useState("N5");
   const [expanded, setExpanded] = React.useState(false);
   const [idx, setIndex] = React.useState(0);
   const [allCards, setAllCards] = React.useState([{
@@ -146,6 +151,22 @@ export default function RecipeReviewCard() {
     setAllCards(items);
   }
 
+  const [anchorEle, setAnchorEle] = React.useState(null);
+  const handleAvatarClick = e => {
+    setAnchorEle(e.currentTarget);
+  };
+  
+  const handleAvatarClose = () => {
+    setAnchorEle(null);
+  };
+
+  const AvatarItemClick = e => {
+    const { myValue } = e.target.dataset;
+
+    setAvatar(myValue)
+    handleAvatarClose()
+  };
+
   return (
     <Grid
       container
@@ -159,11 +180,25 @@ export default function RecipeReviewCard() {
             <tbody>
               <tr>
                 <td>
-                  <CardHeader
-                    avatar={
-                      <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">N5</Avatar>
-                    }
-                  />
+                  <IconButton aria-label="avatar">
+                    <Avatar sx={{ bgcolor: red[500] }} onClick={handleAvatarClick}>{theSelectedAvatar}</Avatar>
+                  </IconButton>
+                  <Menu
+                    anchorEl={anchorEle}
+                    keepMounted
+                    open={Boolean(anchorEle)}
+                    onClose={handleAvatarClose}
+                  >
+                    {levels.map((lv, idx) => (
+                      <MenuItem 
+                        onClick={AvatarItemClick} 
+                        key={`lv-${idx}`} 
+                        data-my-value={lv}
+                      >
+                        {lv}
+                      </MenuItem>
+                    ))}
+                  </Menu>
                 </td>
                 <td><TextField required label="title" value={allCards[idx].title} fullWidth/></td>
                 <td><TextField label="subheader" value={allCards[idx].subheader} fullWidth/></td>
@@ -176,7 +211,6 @@ export default function RecipeReviewCard() {
               </tr>
               <tr>
                 <td colSpan={3}>
-                  {/* <FormLabel id={"label-"+idx}>{allCards[idx].selection.label}</FormLabel> */}
                   <TextField required label="quiz" value={allCards[idx].selection.label} fullWidth/>
                   <RadioGroup
                     aria-labelledby={"label-"+idx}
@@ -217,8 +251,8 @@ export default function RecipeReviewCard() {
               <tr>
                 <td colSpan={3}>
                   <CardActions>
-                    <Button onClick={prevQuestion}><NavigateBeforeIcon /> Prev</Button>
-                    <Button onClick={nextQuestion}>Next <NavigateNextIcon /></Button>
+                    <Button variant="outlined" fullWidth onClick={prevQuestion}><NavigateBeforeIcon /> Prev</Button>
+                    <Button variant="outlined" fullWidth onClick={nextQuestion}>Next <NavigateNextIcon /></Button>
                   </CardActions>
                 </td>
               </tr>
@@ -227,18 +261,15 @@ export default function RecipeReviewCard() {
         </Card>
       </Grid>
       <Grid item xs={12} md={6} lg={6}>
+        <h2>Preview:</h2>
         <Card sx={{ maxWidth: 512 }}>
           <CardHeader
             avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">N5</Avatar>
+              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">{theSelectedAvatar}</Avatar>
             }
             title={allCards[idx].title}
             subheader={allCards[idx].subheader}
           />
-          {/* <CardMedia
-            component={allCards[idx].component}
-            image={allCards[idx].image}
-          /> */}
           <ReactPlayer
             // playing={prop.playing}
             ref={playerRef}
@@ -278,8 +309,8 @@ export default function RecipeReviewCard() {
           </CardContent>
           
           <CardActions>
-            <Button onClick={prevQuestion}><NavigateBeforeIcon /> Prev</Button>
-            <Button onClick={nextQuestion}>Next <NavigateNextIcon /></Button>
+            <Button variant="outlined" fullWidth onClick={prevQuestion}><NavigateBeforeIcon /> Prev</Button>
+            <Button variant="outlined" fullWidth onClick={nextQuestion}>Next <NavigateNextIcon /></Button>
           </CardActions>
           <CardActions disableSpacing>
             <IconButton aria-label="show hints">
