@@ -15,12 +15,16 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import getVideoId from 'get-video-id';
 
 const levels = [
   "N5", "N4", "N3", "N2", "N1"
 ]
 
 export default function QuizEditor(props) {
+  const [ytErrorTxt, setYtErrorTxt] = React.useState('');
+  const [isYtUrlVaild, setYtUrlVaild] = React.useState(false);
+
   const deleteOption = (e, idx, i) => {
     let items = [...props.allCards];
     items[idx].selection.selections;
@@ -64,12 +68,47 @@ export default function QuizEditor(props) {
     props.setAllCards(items);
   }
 
+  const handleUrlChange = (e) => {
+    const url = e.target.value;
+    props.setYtUrl(url)
+
+    if (checkYtUrl(url)) {
+      setYtErrorTxt('')
+      setYtUrlVaild(true)
+    } else {
+      // setYtErrorTxt(intl.get('invalid_youtube_url'))
+      setYtErrorTxt('invalid_youtube_url')
+      setYtUrlVaild(false)
+    }
+  }
+
+  function checkYtUrl(url) {
+    const {id} = getVideoId(url);
+    if (id) {
+      return true;
+    }
+
+    return false;
+  }
+
+
   return (
     <div>
       <h2>Input Your youtube video address:</h2>
       <Card>
         <CardActions>
-          <TextField size='small' required label="url" value={props.ytUrl} fullWidth sx={{ marginRight:1}}/>
+          <TextField 
+            id="outlined-required"
+            size='small' 
+            required 
+            label="url" 
+            value={props.ytUrl} 
+            error={!isYtUrlVaild}
+            helperText={ytErrorTxt}
+            fullWidth 
+            onChange={handleUrlChange}
+            sx={{ marginRight:1}}
+          />
           <Button variant="outlined" >
             <SubtitlesIcon />&nbsp;Subtitle
           </Button>
@@ -119,11 +158,13 @@ export default function QuizEditor(props) {
               <td><TextField onChange={(e) => {handleKeyChange(e, props.cardIdx, "subheader")}} label="subheader" value={props.allCards[props.cardIdx].subheader} fullWidth/></td>
             </tr>
             <tr>
-              <td colSpan={3}><TextField required label="desc" value={props.allCards[props.cardIdx].desc} fullWidth/></td>
+              <td colSpan={3}>
+                <TextField onChange={(e) => {handleKeyChange(e, props.cardIdx, "desc")}} required label="desc" value={props.allCards[props.cardIdx].desc} fullWidth/>
+              </td>
             </tr>
             <tr>
               <td colSpan={3}>
-                <TextField required label="quiz" value={props.allCards[props.cardIdx].selection.label} fullWidth/>
+                <TextField onChange={(e) => {handleKeyChange(e, props.cardIdx, "quiz")}} required label="quiz" value={props.allCards[props.cardIdx].quiz} fullWidth/>
                 <RadioGroup
                   aria-labelledby={"label-"+props.cardIdx}
                   value={props.allCards[props.cardIdx].selection.answer}

@@ -71,7 +71,7 @@ export default function Preview(props) {
             <Typography paragraph>{props.allCards[props.cardIdx].desc}</Typography>
           </div>
           <FormControl>
-          <FormLabel id={"label-"+props.cardIdx}>{props.allCards[props.cardIdx].selection.label}</FormLabel>
+          <FormLabel id={"label-"+props.cardIdx}>{props.allCards[props.cardIdx].quiz}</FormLabel>
           <RadioGroup
             aria-labelledby={"label-"+props.cardIdx}
             value={props.allCards[props.cardIdx].selection.answer}

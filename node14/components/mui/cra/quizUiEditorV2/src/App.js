@@ -8,13 +8,13 @@ export default function EditPage() {
   const playerRef = React.useRef(null);
   const [theSelectedAvatar, setAvatar] = React.useState("N5");
   const [cardIdx, setCardIndex] = React.useState(0);
-  const [ytUrl, setYtUrl] = React.useState("https://youtu.be/eZDA1QTnRVI");
+  const [ytUrl, setYtUrl] = React.useState("");
   const [allCards, setAllCards] = React.useState([{
       "title": "This is first question",
       "subheader": "grammar",
       "desc": "This is the 1st question",
+      "quiz": "What is your answers?",
       "selection": {
-        "label": "What is your answers?",
         "answer": "",
         "selections":[
           {"label": "<ruby>漢字<rt>かんじ</rt></ruby>"},
@@ -26,8 +26,8 @@ export default function EditPage() {
       "title": "This is 2nd question",
       "subheader": "vocabulary",
       "desc": "This is the 2nd question",
+      "quiz": "What is your answers?",
       "selection": {
-        "label": "What is your answers?",
         "answer": "",
         "selections":[
           {"label": "DDD"},
@@ -39,8 +39,8 @@ export default function EditPage() {
       "title": "This is 3rd question",
       "subheader": "grammar",
       "desc": "This is the 3rd question",
+      "quiz": "What is your answers?",
       "selection": {
-        "label": "What is your answers?",
         "answer": "",
         "selections":[
           {"label": `<span style="background: red">GGG</span>`},
@@ -52,8 +52,8 @@ export default function EditPage() {
       "title": "This is 4th question",
       "subheader": "youtube video",
       "desc": "TODO: fix cross-origin problem, This is the 4th question",
+      "quiz": "What is your answers?",
       "selection": {
-        "label": "What is your answers?",
         "answer": "",
         "selections":[
           {"label": "JJJ"},
@@ -99,6 +99,7 @@ export default function EditPage() {
           setAllCards={setAllCards}
           cardIdx={cardIdx}
           ytUrl={ytUrl}
+          setYtUrl={setYtUrl}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6}>
