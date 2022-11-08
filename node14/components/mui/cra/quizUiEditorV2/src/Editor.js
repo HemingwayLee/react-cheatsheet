@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
@@ -114,22 +115,16 @@ export default function QuizEditor(props) {
           </Button>
         </CardActions>
       </Card>
-      
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <h2>Input Your Questions:</h2>
-            </td>
-            <td>
-              <Button variant="outlined" fullWidth>
-                <AddCircleOutlineIcon />&nbsp;Add a new question
-              </Button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <h2>Input Your Questions:</h2>
       <Card>
+        <CardHeader
+          action={
+            <IconButton>
+              <DeleteForeverIcon />
+            </IconButton>
+          }
+        >
+        </CardHeader>
         <table>
           <tbody>
             <tr>
@@ -213,6 +208,11 @@ export default function QuizEditor(props) {
             </tr>
           </tbody>
         </table>
+      </Card>
+      <Card style={{marginTop: "10px", backgroundColor: "#F0F0F0", padding: "15px"}}>
+        <Button variant="outlined" fullWidth>
+          <AddCircleOutlineIcon />&nbsp;Add a new question
+        </Button> 
       </Card>
     </div>
   )
