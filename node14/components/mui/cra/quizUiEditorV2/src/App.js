@@ -100,6 +100,7 @@ export default function EditPage() {
           cardIdx={cardIdx}
           ytUrl={ytUrl}
           setYtUrl={setYtUrl}
+          setCardIndex={setCardIndex}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6}>

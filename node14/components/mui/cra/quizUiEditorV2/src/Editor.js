@@ -17,6 +17,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import getVideoId from 'get-video-id';
+import QuizPage from './quizPagination';
 
 const levels = [
   "N5", "N4", "N3", "N2", "N1"
@@ -69,6 +70,37 @@ export default function QuizEditor(props) {
     props.setAllCards(items);
   }
 
+  const handleOptionChange = (e, idx, i) => {
+    let items = [...props.allCards];
+    items[idx]["selection"]["selections"][i]["label"] = e.target.value;
+
+    props.setAllCards(items);
+  }
+
+  const addNewQuestion = (e) => {
+    let items = [...props.allCards];
+    items.push({
+      "title": "This is a new question",
+      "subheader": "grammar",
+      "desc": "This is a new question",
+      "quiz": "What is your answers?",
+      "selection": {
+        "answer": "",
+        "selections":[
+          {"label": `<span style="background: red">GGG</span>`},
+          {"label": "HHH"},
+          {"label": "III"}
+        ]
+      }
+    });
+
+    props.setAllCards(items);
+  }
+
+  const deleteTheQuestion = (e) => {
+    
+  }
+
   const handleUrlChange = (e) => {
     const url = e.target.value;
     props.setYtUrl(url)
@@ -115,12 +147,30 @@ export default function QuizEditor(props) {
           </Button>
         </CardActions>
       </Card>
-      <h2>Input Your Questions:</h2>
+      <hr/>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <QuizPage 
+                count={props.allCards.length}
+                setCardIndex={props.setCardIndex}
+              />
+            </td>
+            <td>
+              <Button variant="outlined" onClick={addNewQuestion} >
+                <AddCircleOutlineIcon />&nbsp;Add a new question
+              </Button>
+            </td>
+          </tr>
+        </tbody>
+      </table> 
+      <h2>Input Your Question No. {props.cardIdx+1}</h2>
       <Card>
         <CardHeader
           action={
-            <IconButton>
-              <DeleteForeverIcon />
+            <IconButton onClick={deleteTheQuestion}>
+              <DeleteForeverIcon  />
             </IconButton>
           }
         >
@@ -129,8 +179,8 @@ export default function QuizEditor(props) {
           <tbody>
             <tr>
               <td>
-                <IconButton aria-label="avatar">
-                  <Avatar sx={{ bgcolor: "red" }} onClick={handleAvatarClick}>{props.theSelectedAvatar}</Avatar>
+                <IconButton onClick={handleAvatarClick} aria-label="avatar">
+                  <Avatar sx={{ bgcolor: "red" }}>{props.theSelectedAvatar}</Avatar>
                 </IconButton>
                 <Menu
                   anchorEl={anchorEle}
@@ -160,60 +210,66 @@ export default function QuizEditor(props) {
             <tr>
               <td colSpan={3}>
                 <TextField onChange={(e) => {handleKeyChange(e, props.cardIdx, "quiz")}} required label="quiz" value={props.allCards[props.cardIdx].quiz} fullWidth/>
+              </td>
+            </tr>
+            <tr>
+              <td colSpan={3}>
                 <RadioGroup
                   aria-labelledby={"label-"+props.cardIdx}
                   value={props.allCards[props.cardIdx].selection.answer}
                 >
-                  {
-                    Array.isArray(props.allCards[props.cardIdx].selection.selections) ? props.allCards[props.cardIdx].selection.selections.map((x, i) => {
-                      const theId = `editor-quiz-${props.cardIdx}-sel-${i}`
-                      return (
-                        <table>
-                          <tbody>
+                  <table>
+                    <tbody>
+                      {
+                        Array.isArray(props.allCards[props.cardIdx].selection.selections) ? props.allCards[props.cardIdx].selection.selections.map((x, i) => {
+                          const theId = `editor-quiz-${props.cardIdx}-sel-${i}`
+                          return (
                             <tr>
                               <td>
                                 <FormControlLabel key={theId} control={<Radio/>} label="" />
                               </td>
                               <td>
-                                <TextField required label={theId} value={x.label} fullWidth/>
+                                <TextField onChange={(e) => {handleOptionChange(e, props.cardIdx, i)}}  required label={theId} value={x.label} fullWidth/>
                               </td>
                               <td>
-                                <IconButton aria-label="delete">
-                                  <DeleteForeverIcon onClick={(e)=>{deleteOption(e, props.cardIdx, i)}}/>
+                                <IconButton onClick={(e)=>{deleteOption(e, props.cardIdx, i)}} aria-label="delete">
+                                  <DeleteForeverIcon />
                                 </IconButton>
                               </td>
                             </tr>
-                          </tbody>
-                        </table>
-                      )
-                    }) : null
-                  }
+                          )
+                        }) : null
+                      }
+                      <tr>
+                        <td></td>
+                        <td>
+                          {/* <TextField style={{backgroundColor: '#F0F0F0'}} disabled fullWidth/> */}
+                        </td>
+                        <td>
+                          <IconButton onClick={(e) => {addMoreOption(e, props.cardIdx, props.allCards[props.cardIdx].selection.selections.length)}}>
+                            <AddCircleOutlineIcon />
+                          </IconButton>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </RadioGroup>
               </td>
             </tr>
-            <tr>
-              <td colSpan={3}>
-                <Button variant="outlined" color="primary" fullWidth onClick={(e) => {addMoreOption(e, props.cardIdx, props.allCards[props.cardIdx].selection.selections.length)}}>
-                  <AddCircleOutlineIcon />&nbsp;Add one more option
-                </Button>
-              </td>
-            </tr>
-            <tr>
+            {/* <tr>
               <td colSpan={3}>
                 <CardActions>
                   <Button variant="contained" fullWidth onClick={props.prevQuestion}><NavigateBeforeIcon /> Prev</Button>
                   <Button variant="contained" fullWidth onClick={props.nextQuestion}>Next <NavigateNextIcon /></Button>
                 </CardActions>
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </Card>
-      <Card style={{marginTop: "10px", backgroundColor: "#F0F0F0", padding: "15px"}}>
-        <Button variant="outlined" fullWidth>
-          <AddCircleOutlineIcon />&nbsp;Add a new question
-        </Button> 
-      </Card>
+      {/* <Card style={{marginTop: "10px", backgroundColor: "#F0F0F0", padding: "15px"}}>
+        
+      </Card> */}
     </div>
   )
 }
