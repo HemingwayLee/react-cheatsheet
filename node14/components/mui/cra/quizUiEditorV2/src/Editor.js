@@ -4,8 +4,6 @@ import CardHeader from '@mui/material/CardHeader';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Avatar from '@mui/material/Avatar';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CardActions from '@mui/material/CardActions';
@@ -29,7 +27,7 @@ export default function QuizEditor(props) {
 
   const deleteOption = (e, idx, i) => {
     let items = [...props.allCards];
-    items[idx].selection.selections;
+    
     for (let j = items[idx].selection.selections.length; j--;) {
       if (j === i) {
         items[idx].selection.selections.splice(i, 1);
@@ -97,8 +95,16 @@ export default function QuizEditor(props) {
     props.setAllCards(items);
   }
 
-  const deleteTheQuestion = (e) => {
+  const deleteTheQuestion = (e, idx) => {
+    let items = [...props.allCards];
     
+    for (let j = items.length; j--;) {
+      if (j === idx) {
+        items.splice(idx, 1);
+      }
+    }
+
+    props.setAllCards(items);
   }
 
   const handleUrlChange = (e) => {
@@ -165,11 +171,11 @@ export default function QuizEditor(props) {
           </tr>
         </tbody>
       </table> 
-      <h2>Input Your Question No. {props.cardIdx+1}</h2>
+      <h2>Input Your Question</h2>
       <Card>
         <CardHeader
           action={
-            <IconButton onClick={deleteTheQuestion}>
+            <IconButton onClick={(e) => { deleteTheQuestion(e, props.cardIdx) }}>
               <DeleteForeverIcon  />
             </IconButton>
           }
