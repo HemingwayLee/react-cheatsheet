@@ -16,6 +16,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import getVideoId from 'get-video-id';
 import QuizPage from './quizPagination';
+import DraggableDialog from './confirmation';
 
 const levels = [
   "N5", "N4", "N3", "N2", "N1"
@@ -24,6 +25,8 @@ const levels = [
 export default function QuizEditor(props) {
   const [ytErrorTxt, setYtErrorTxt] = React.useState('');
   const [isYtUrlVaild, setYtUrlVaild] = React.useState(false);
+  const [confirmDlgOpen, setDlgOpen] = React.useState(false);
+
 
   const deleteOption = (e, idx, i) => {
     let items = [...props.allCards];
@@ -95,16 +98,26 @@ export default function QuizEditor(props) {
     props.setAllCards(items);
   }
 
-  const deleteTheQuestion = (e, idx) => {
-    let items = [...props.allCards];
-    
-    for (let j = items.length; j--;) {
-      if (j === idx) {
-        items.splice(idx, 1);
-      }
-    }
+  const handleDlgClose = (isOkay, idx) => {
+    setDlgOpen(false);
 
-    props.setAllCards(items);
+    if (isOkay) {
+      let items = [...props.allCards];
+      for (let j = items.length; j--;) {
+        if (idx === items.length-1) {
+          props.setCardIndex(idx-1)
+        }
+
+        if (j === idx) {
+          items.splice(idx, 1);
+        }
+      }
+      props.setAllCards(items);
+    }
+  }
+
+  const deleteTheQuestion = () => {
+    setDlgOpen(true);
   }
 
   const handleUrlChange = (e) => {
@@ -175,7 +188,7 @@ export default function QuizEditor(props) {
       <Card>
         <CardHeader
           action={
-            <IconButton onClick={(e) => { deleteTheQuestion(e, props.cardIdx) }}>
+            <IconButton disabled={props.allCards.length===1} onClick={deleteTheQuestion}>
               <DeleteForeverIcon  />
             </IconButton>
           }
@@ -273,9 +286,12 @@ export default function QuizEditor(props) {
           </tbody>
         </table>
       </Card>
-      {/* <Card style={{marginTop: "10px", backgroundColor: "#F0F0F0", padding: "15px"}}>
-        
-      </Card> */}
+      <DraggableDialog 
+        cardIdx={props.cardIdx}
+        handleDlgClose={handleDlgClose}
+        confirmDlgOpen={confirmDlgOpen}
+        setDlgOpen={setDlgOpen}
+      />
     </div>
   )
 }
