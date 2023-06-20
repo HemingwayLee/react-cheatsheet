@@ -3,8 +3,10 @@ import styled from "@xstyled/styled-components";
 import { colors } from "@atlaskit/theme";
 import PropTypes from "prop-types";
 import Column from "./Column";
+import EmptyColumn from "./EmptyColumn"
 import reorder, { reorderQuoteMap } from "../reorder";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+
 
 const Container = styled.div`
   background-color: ${colors.B100};
@@ -105,10 +107,12 @@ const Board = ({
                 />
               ))}
               {provided.placeholder}
+              <EmptyColumn />
             </Container>
           )}
         </Droppable>
       </DragDropContext>
+      
     </>
   );
 };

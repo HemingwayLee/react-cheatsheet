@@ -106,7 +106,7 @@ const Footer = styled.div`
   align-items: center;
 `;
 
-const Author = styled.small`
+const Tag = styled.small`
   color: ${(props) => props.colors.hard};
   flex-grow: 0;
   margin: 0;
@@ -148,12 +148,11 @@ function QuoteItem(props) {
 
   return (
     <Container
-      // href={quote.author.url}
       onClick={(evt)=>{ console.log(evt) }}
       isDragging={isDragging}
       isGroupedOver={isGroupedOver}
       isClone={isClone}
-      colors={quote.author.colors}
+      colors={quote.tag.colors}
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
@@ -161,17 +160,16 @@ function QuoteItem(props) {
       data-is-dragging={isDragging}
       data-testid={quote.id}
       data-index={index}
-      aria-label={`${quote.author.name} quote ${quote.content}`}
+      aria-label={`${quote.tag.name} quote ${quote.content}`}
     >
       <Avatar src={quote.author.avatarUrl} alt={quote.author.name} />
       {isClone ? <CloneBadge>Clone</CloneBadge> : null}
       <Content>
         <BlockQuote>{quote.content}</BlockQuote>
         <Footer>
-          <Author colors={quote.author.colors}>{quote.author.name}</Author>
+          <Tag colors={quote.tag.colors}>{quote.tag.name}</Tag>
           <QuoteId>
-            id:
-            {quote.id}
+            {quote.theDate}
           </QuoteId>
         </Footer>
       </Content>
