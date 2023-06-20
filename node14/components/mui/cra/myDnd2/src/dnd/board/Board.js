@@ -6,7 +6,10 @@ import Column from "./Column";
 import EmptyColumn from "./EmptyColumn"
 import reorder, { reorderQuoteMap } from "../reorder";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-
+import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import ColumnNameDialog from '../popups/columnEditor';
 
 const Container = styled.div`
   background-color: ${colors.B100};
@@ -23,9 +26,21 @@ const Board = ({
   containerHeight,
   withScrollableColumns
 }) => {
-  const [columns, setColumns] = useState(initial);
+  console.log(initial)
+  console.log(Object.keys(initial))
 
+  const [columns, setColumns] = useState(initial);
   const [ordered, setOrdered] = useState(Object.keys(initial));
+
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
+  const handleSettingsOpen = () => {
+    setSettingsOpen(true);
+  };
+
+  const handleSettingsClose = () => {
+    setSettingsOpen(false);
+  };
 
   const onDragEnd = (result) => {
     if (result.combine) {
@@ -83,8 +98,26 @@ const Board = ({
     setColumns(data.quoteMap);
   };
 
+  const addColumn = () => {
+    const tmpCol = {
+      ...columns,
+      "AAA": []
+    };
+    
+    let tmpOrdered = [...ordered]
+    tmpOrdered.push("AAA")
+
+    setColumns(tmpCol);
+    setOrdered(tmpOrdered);
+  }
+
   return (
+    
     <>
+      <IconButton aria-label="add" onClick={addColumn}>
+        <AddIcon fontSize="inherit" />
+      </IconButton>
+      
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
           droppableId="board"
@@ -100,6 +133,7 @@ const Board = ({
                   key={key}
                   index={index}
                   title={key}
+                  handleSettingsOpen={handleSettingsOpen}
                   quotes={columns[key]}
                   isScrollable={withScrollableColumns}
                   isCombineEnabled={isCombineEnabled}
@@ -107,12 +141,16 @@ const Board = ({
                 />
               ))}
               {provided.placeholder}
-              <EmptyColumn />
+              {/* <EmptyColumn /> */}
             </Container>
           )}
         </Droppable>
       </DragDropContext>
       
+      <ColumnNameDialog 
+        onClose={handleSettingsClose} 
+        open={settingsOpen} 
+      />
     </>
   );
 };

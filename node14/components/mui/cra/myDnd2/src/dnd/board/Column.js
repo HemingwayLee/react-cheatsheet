@@ -33,6 +33,7 @@ const Column = (props) => {
   const title = props.title;
   const quotes = props.quotes;
   const index = props.index;
+
   return (
     <Draggable draggableId={title} index={index}>
       {(provided, snapshot) => (
@@ -44,7 +45,7 @@ const Column = (props) => {
               aria-label={`${title} quote list`}
             >
               {title}
-              <IconButton aria-label="edit">
+              <IconButton aria-label="edit" onClick={props.handleSettingsOpen}>
                 <EditIcon fontSize="inherit" />
               </IconButton>
               <IconButton aria-label="delete">
