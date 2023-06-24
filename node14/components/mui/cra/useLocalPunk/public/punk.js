@@ -455,9 +455,9 @@ function generatePunkDesign(dna) {
   return design;
 }
 
-function drawAPunk() {
+function drawAPunk(eid="#punkx20", zoom=4) {
   const design = generatePunkDesign("0;1;-1");
   console.log(design);
-  drawPunk('#punkx20', design, 20);
+  drawPunk(eid, design, zoom);
 }
 
