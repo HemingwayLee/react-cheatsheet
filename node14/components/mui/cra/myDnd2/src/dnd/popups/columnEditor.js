@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 // import intl from 'react-intl-universal';
 
-export default function ColumnNameDialog(props) {
+const ColumnNameDialog = React.forwardRef((props, ref) => {
   const { onClose, open } = props;
   const [wordings, setWordings] = React.useState();
   const [errorTxt, setErrorTxt] = React.useState('');
@@ -18,9 +18,26 @@ export default function ColumnNameDialog(props) {
   };
 
   const handleTitleUpdate = () => {
-    // props.shiftStartTime(sec)
     onClose();
   };
+
+  const handleSecChange = (event) => {
+    const theValue = event.target.value;
+    setWordings(theValue);
+    if (theValue === '') {
+      setErrorTxt('Can not be empty')
+      setSecVaild(false)
+    } else {
+      setErrorTxt('')
+      setSecVaild(true)
+    }
+  }
+
+  React.useImperativeHandle(ref, () => ({
+    setWordingsFromParent(wording) {
+      setWordings(wording)
+    }
+  }), [setWordings]);
 
   return (
     <Dialog 
@@ -29,19 +46,19 @@ export default function ColumnNameDialog(props) {
     >
       {/* <DialogTitle>{intl.get("adjust_all_subtitles")}</DialogTitle> */}
       <DialogTitle>{"Edit Column Name"}</DialogTitle>
-      <InputLabel>{wordings}</InputLabel>
-      <br/>
+      {/* <InputLabel>{wordings}</InputLabel> */}
+      {/* <br/> */}
       <TextField
         autoComplete='off'
-        value={props.title}
+        value={wordings}
         error={!isSecVaild}
         required
         helperText={errorTxt}
         id="outlined-required"
         label="Required"
+        onChange={handleSecChange}
       />
-      <Button 
-        disabled={!isSecVaild}
+      <Button
         variant="contained" 
         component="label" 
         onClick={handleTitleUpdate}>
@@ -49,4 +66,6 @@ export default function ColumnNameDialog(props) {
       </Button>
     </Dialog>
   );
-}
+})
+
+export default ColumnNameDialog;

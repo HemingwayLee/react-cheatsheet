@@ -45,7 +45,7 @@ const Column = (props) => {
               aria-label={`${title} quote list`}
             >
               {title}
-              <IconButton aria-label="edit" onClick={props.handleSettingsOpen}>
+              <IconButton aria-label="edit" onClick={() => {props.handleSettingsOpen(title)}}>
                 <EditIcon fontSize="inherit" />
               </IconButton>
               <IconButton aria-label="delete">

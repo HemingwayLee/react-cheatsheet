@@ -9,6 +9,8 @@ export default function App() {
     large: generateQuoteMap(500)
   };
 
+  console.log(data.medium)
+
   return (
     <>
       <Board initial={data.medium} withScrollableColumns />

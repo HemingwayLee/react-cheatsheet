@@ -33,8 +33,10 @@ const Board = ({
   const [ordered, setOrdered] = useState(Object.keys(initial));
 
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const columnNameRef = React.useRef(null);
 
-  const handleSettingsOpen = () => {
+  const handleSettingsOpen = (title) => {
+    columnNameRef.current.setWordingsFromParent(title)
     setSettingsOpen(true);
   };
 
@@ -148,6 +150,7 @@ const Board = ({
       </DragDropContext>
       
       <ColumnNameDialog 
+        ref={columnNameRef}
         onClose={handleSettingsClose} 
         open={settingsOpen} 
       />
