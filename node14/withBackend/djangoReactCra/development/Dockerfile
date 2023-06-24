@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.7.15
 
 RUN apt-get update && apt-get install -y net-tools postgresql-client curl sudo
 RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
