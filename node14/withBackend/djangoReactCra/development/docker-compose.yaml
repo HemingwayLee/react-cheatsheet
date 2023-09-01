@@ -26,6 +26,7 @@ services:
       - "./backend:/home/app/backend"
       - "./frontend/src:/home/app/frontend/src"
       - "./frontend/public:/home/app/frontend/public"
+      - "./scripts:/home/app/scripts"
     ports:
       - "8000:8000"
       - "3000:3000"
