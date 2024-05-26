@@ -12,7 +12,7 @@ export default function Welcome() {
   const filename = "frame_";
   const itemData = [...new Array(length)].map((item, idx) => {
     return {
-      color: (idx === 0 || idx === length-1) ? "#124116" : "#093170",
+      color: (idx === 0 || idx === length-1) ? "#12411680" : "#09317080",
       img: `/${foldername}/${filename}${padZero(idx, 3)}.png`,
       title: `${filename}${padZero(idx, 3)}.png`
     }
@@ -46,32 +46,4 @@ export default function Welcome() {
     </ImageList>
   );
 }
-
-// const itemData = [
-//   {
-//     img: '/cats/cat.jpg',
-//     title: 'cat',
-//   },
-//   {
-//     img: '/cats/cat.jpg',
-//     title: 'cat',
-//   },
-//   {
-//     img: '/cats/cat.jpg',
-//     title: 'cat',
-//   },
-//   {
-//     img: '/cats/cat.jpg',
-//     title: 'cat',
-//   },
-//   {
-//     img: '/cats/cat.jpg',
-//     title: 'cat',
-//   },
-//   {
-//     img: '/cats/cat.jpg',
-//     title: 'cat',
-//   }
-// ];
-
 
