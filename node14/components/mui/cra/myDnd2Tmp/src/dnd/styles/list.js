@@ -26,17 +26,6 @@ const Wrapper = styled.div`
   user-select: none;
 `;
 
-const scrollContainerHeight = 350;
-
-const DropZone = styled.div`
-  /* stop the list collapsing when empty */
-  min-height: ${scrollContainerHeight}px;
-  /*
-    not relying on the items for a margin-bottom
-    as it will collapse when the list is empty
-  */
-  padding-bottom: ${grid}px;
-`;
 
 const InnerQuoteList = React.memo(function InnerQuoteList(props) {
   return props.quotes.map((quote, index) => (
@@ -57,10 +46,10 @@ function InnerList(props) {
   const { quotes, dropProvided } = props;
   return (
     <div>
-      <DropZone ref={dropProvided.innerRef}>
+      <div style={{paddingBottom: `${grid}px`}} ref={dropProvided.innerRef}>
         <InnerQuoteList quotes={quotes} />
         {dropProvided.placeholder}
-      </DropZone>
+      </div>
     </div>
   );
 }
