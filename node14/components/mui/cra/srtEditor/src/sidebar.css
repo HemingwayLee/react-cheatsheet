@@ -1,0 +1,7 @@
+a.token {
+  color: black;
+}
+
+a.token:hover {
+  border: 1px solid black 
+}
