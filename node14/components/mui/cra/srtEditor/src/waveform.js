@@ -17,7 +17,7 @@ export default function WaveForm(prop) {
           // progressColor: 'blue',
           fillParent: false,
           scrollParent: true,
-          minPxPerSec: 75, 
+          minPxPerSec: prop.zoom, 
           plugins: [
             RegionsPlugin.create({
               regions: prop.regions
@@ -42,6 +42,7 @@ export default function WaveForm(prop) {
         wavesurfer.load(prop.audioFilePath)
         wavesurfer.setMute(true);
         wavesurfer.on('ready', prop.waveDrawnReady);
+        wavesurfer.on('region-update-end', prop.handleRegionUpdate);
         prop.setWavesurfer(wavesurfer)
       }
     }, []);

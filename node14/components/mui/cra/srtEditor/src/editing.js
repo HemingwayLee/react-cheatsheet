@@ -35,8 +35,19 @@ export default function EditingDialog(props) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
-  function handleSecChange(event) {
-    
+  function handleSec1Change(event) {
+    const theValue = event.target.value;
+    setSecStart(theValue);
+  }
+
+  function handleSec2Change(event) {
+    const theValue = event.target.value;
+    setSecEnd(theValue);
+  }
+
+  function handleTxtChange(event) {
+    const theValue = event.target.value;
+    setText(theValue);
   }
 
   return (
@@ -51,35 +62,35 @@ export default function EditingDialog(props) {
       <TextField
         autoComplete='off'
         value={text}
-        error={!isSecVaild}
+        // error={!isSecVaild}
         required
         helperText={errorTxt}
         id="outlined-required"
         label="Required"
-        onChange={handleSecChange}
+        onChange={handleTxtChange}
       />
       <TextField
         autoComplete='off'
         value={secStart}
-        error={!isSecVaild}
+        // error={!isSecVaild}
         required
         helperText={errorTxt}
         id="outlined-required"
         label="Required"
-        onChange={handleSecChange}
+        onChange={handleSec1Change}
       />
       <TextField
         autoComplete='off'
         value={secEnd}
-        error={!isSecVaild}
+        // error={!isSecVaild}
         required
         helperText={errorTxt}
         id="outlined-required"
         label="Required"
-        onChange={handleSecChange}
+        onChange={handleSec2Change}
       />
       <Button 
-        disabled={!isSecVaild}
+        // disabled={!isSecVaild}
         variant="contained" 
         component="label" 
         onClick={handleSecUpdate}>

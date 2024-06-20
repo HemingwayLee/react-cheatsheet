@@ -10,6 +10,7 @@ import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import SideBarItems from './sidebar';
 import Mp4Player from './player';
 import WaveForm from './waveform';
+import Slider from '@mui/material/Slider';
 import intl from 'react-intl-universal';
 
 const cbColors = ["#d55e0077", "#0072b277", "#cc79a777",  "#f0e44277", "#009e7377"];
@@ -35,6 +36,7 @@ export default function Dashboard() {
   const sidebarRef = React.useRef(null);
   const [playing, setPlaying] = React.useState(false);
   const [regions, setRegions] = React.useState([]);
+  const [sliderValue, setSliderValue] = React.useState(75);
 
   const [videoFilePath, setVideoFilePath] = React.useState(null);
   const [audioFilePath, setAudioFilePath] = React.useState(null);
@@ -66,6 +68,11 @@ export default function Dashboard() {
     }
   }
 
+  const handleRegionUpdateFromDrag = (region) => {
+    console.log("!!")
+    console.log(region);
+  }
+
   const onWaveDrawnReady = () => {
     if (playerRef) {
       setVideoControls(true)
@@ -94,7 +101,12 @@ export default function Dashboard() {
     //   objWavesurfer.seekTo(jump2 / objWavesurfer.getDuration());
     // }
   }
-  
+
+  const handleSliderChange = (_, newValue) => {
+    setSliderValue(newValue);
+    objWavesurfer.zoom(newValue)
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
@@ -122,10 +134,6 @@ export default function Dashboard() {
         >
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={8} lg={9}>
-              </Grid>
-              <Grid item xs={12} md={4} lg={3}>
-              </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Mp4Player 
@@ -145,14 +153,19 @@ export default function Dashboard() {
                   />
                 </Paper>
               </Grid>
+              <Grid item xs={12} md={4} lg={3}>
+                <Slider defaultValue={sliderValue} min={75} max={300} aria-label="Default" valueLabelDisplay="auto" onChange={handleSliderChange} />
+              </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <WaveForm
                     setWavesurfer={setWavesurfer}
+                    zoom={sliderValue}
                     regions={regions}
                     waveDiv={waveDivRef} 
                     timelineDiv={timelineDivRef}
                     audioFilePath={audioFilePath}
+                    handleRegionUpdate={handleRegionUpdateFromDrag}
                     waveDrawnReady={onWaveDrawnReady}
                   />
                 </Paper>

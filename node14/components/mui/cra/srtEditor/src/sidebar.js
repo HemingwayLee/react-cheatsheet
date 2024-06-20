@@ -84,8 +84,8 @@ const SideBarItems = ((prop, ref) => {
         start: prop.getTotalSecMiliSec(x.startTime),
         end: prop.getTotalSecMiliSec(x.endTime),
         loop: false,
-        drag: false,
-        resize: false,
+        drag: true,
+        resize: true,
         attributes: {
           label: x.text
         },
@@ -267,7 +267,12 @@ const SideBarItems = ((prop, ref) => {
   };
 
   const handleEditing = (txt, sec1, sec2) => {
+    let tmp = [...stateItems];
+    tmp[editingIdx].startTime = sec1;
+    tmp[editingIdx].endTime = sec2;
+    tmp[editingIdx].text = txt;
 
+    setItemValues(tmp);
   }
 
   const handleShiftTime = (sec) => {
